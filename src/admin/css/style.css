@@ -1,0 +1,71 @@
+main{
+  margin: 30px auto;
+  width:400px;
+  text-align: center;
+}
+
+#form{
+  width: 80%;
+  margin:0 auto;
+  background-color: lightpink;
+  border: 1px solid black;
+  padding: 30px;
+}
+
+#Registration{
+  width: 80%;
+  margin:20px auto ;
+
+  border: 1px solid black;
+  padding: 30px;
+}
+
+.nameId,.passId{
+  text-align: left;
+}
+
+#name,#pass{
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#btn{
+  width:50%;
+  margin-bottom: 20px;
+  cursor: pointer;
+  box-shadow:0 2px  lightslategrey;
+}
+
+#btn:active{
+  box-shadow: none;
+  position: relative;
+  top:2px;
+}
+
+
+#inname,#inpass{
+  display: none;
+}
+
+.kya{
+  float: left;
+}
+
+#passchange{
+  width: 30%;
+  margin: 0 auto;
+}
+
+.newbtn{
+  float: left;
+}
+
+#logoutbtn{
+ 
+  padding: 5px;
+}
+
+.manage{
+  width: 50%;
+  margin: 100px auto;
+}
