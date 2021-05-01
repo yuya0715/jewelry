@@ -1,0 +1,110 @@
+@charset "UTF-8";
+h1 {
+  margin-top: 160px;
+}
+.list{
+  width: 980px;
+  display: flex;
+  justify-content: center;
+  }
+
+.list div{
+  height: 225px;
+  margin-bottom: 30px;
+}
+/* .list img{
+  margin: 0 5px;
+} */
+.list img:hover{
+  transition-duration: 0.3s;
+  transform: scale(1.02)
+}
+
+h3{
+  font-size: 14px;
+  margin-left: 10px;
+  font-weight: lighter;
+}
+.list a{
+  text-decoration: none;
+  color: black;
+}
+.line{
+  margin-top: 30px;
+  border-top: 1px solid #996666;
+}
+
+.komidasi,h2{
+  font-size: 23px;
+  text-align: left;
+  margin-left: 35px;
+}
+h2::first-letter{
+  color:#000;
+}
+.company{
+  display: flex;
+}
+.c01,.c02{
+  width: 490px;
+  text-align: center;
+  margin: 20px;
+}
+.c01 p{
+  font-size: 17px;
+}
+
+p{
+  line-height: 40px;
+}
+
+.link{
+  display: flex;
+  justify-content: center;
+}
+.link div{
+  margin: 15px;
+}
+
+.btn03{
+  padding: 3px 67px;
+}
+.history01{
+  margin: 20px;
+}
+.history01 div{
+  margin: 25px;
+  padding: 10px;
+}
+.history01 figure{
+  float: right;
+}
+.history01 p{
+  padding-right: 48px;
+}
+.history02 figure{
+  float: left;
+}
+
+.history02 p{
+  padding-left: 48px;
+}
+.fa-signature:before {
+  content: "\f5b7";
+  font-size: 16px;
+  color: #CC0030;
+}
+.margin02{
+  float: right;
+  margin: 70px 0;
+}
+.box_desc{
+  /* background-color: #f1f1f8;; */
+  margin: 0 8px;
+  /* border-radius: 7px; */
+
+}
+.box_desc:hover{
+  /* background-color: #fdeff2; */
+  background-color: #f1f1f8;;
+}

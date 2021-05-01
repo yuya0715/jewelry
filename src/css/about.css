@@ -1,0 +1,56 @@
+@charset "UTF-8";
+h1 {
+  margin-top: 160px;
+}
+.about{
+  text-align: center;
+  font-size: 13px;
+}
+.zougo{
+  margin: 20px 0;
+  font-size: 17px;
+  margin-left: 0.5em;
+}
+.about01 p{
+  display: inline-block;
+  text-align: left;
+  margin: 0 130px;
+  line-height: 36px;
+}
+.about01 img{
+  margin: 25px 0 40px;
+}
+.profile{
+  display: flex;
+  margin-top: 70px;
+}
+.profile01{
+  text-align: start;
+  margin-left: 100px;
+}
+.profile01 img{
+  margin: 40px 0;
+}
+.profile02{
+  display: inline-block;
+  text-align: left;
+  margin: 60px 90px 60px 0;
+  font-size: 14px;
+}
+li{
+  list-style: none;
+}
+.profile02 ul{
+  font-size: 12px;
+  margin-top: 6px;
+}
+h4{
+  text-align: left;
+  border-bottom: black solid 1px;
+}
+/* 右からフェードイン */
+.slide-right {
+	opacity: 0;
+	transform: translate(14px, 0);
+	transition: all 1.9s ease-out;
+}

@@ -1,0 +1,42 @@
+@charset "UTF-8";
+h1{
+  margin-top: 160px;
+}
+.com{
+  text-align: center;
+  font-size: 12px;
+  margin-top: 15px;
+  margin-bottom: 55px;
+}
+.contact-main{
+  width: 980px;
+}
+.contact-main .btn{
+  border-style: none;
+}
+.line{
+  border-top: 1px solid #996666;
+}
+form{
+  margin-top: 25px;
+  margin-bottom: 68px;
+}
+form td{
+  font-size: 15px;
+  padding: 20px;
+}
+table{
+  padding-bottom: 20px;
+}
+.btn{
+  padding: 6px 76px;
+  font-size: 14px;
+}
+input,textarea{
+  font-family:'Cormorant Garamond','Sawarabi Mincho', serif;
+  border: 1.1px solid #000000;
+}
+input{
+  padding: 3px;
+
+}

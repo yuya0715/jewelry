@@ -1,0 +1,48 @@
+@charset "UTF-8";
+body {
+	display: none;
+}
+h1 {
+  margin-top: 160px;
+}
+.item{
+  margin-top: 160px;
+  display: flex;
+}
+.center {
+  margin-top: -1px;
+}
+.navi{
+  display: none;
+}
+.logo img {
+  margin-left: 45px;
+}
+nav ul li a {
+  margin-left: 18px;
+}
+.nav-left {
+  margin-left: 20px;
+}
+.margin01 {
+  margin-left: 0px;
+}
+nav ul li {
+  margin-right: 42px;
+}
+.sns li{
+  font-size: 11px;
+}
+.sns ul a:hover{
+  color:#CC0030;
+  transform: scale(1.2);
+}
+.item01{
+  width: 500px;
+}
+.item02{
+  width: 480px;
+}
+h1{
+  margin: 20px 0 30px;
+}

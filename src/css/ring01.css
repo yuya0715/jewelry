@@ -1,0 +1,264 @@
+@charset "UTF-8";
+body {
+	display: none;
+}
+
+.online-main{
+  margin-top: 160px;
+}
+.center {
+  margin-top: -1px;
+}
+.navi{
+  display: none;
+}
+.logo img {
+  margin-left: 45px;
+}
+nav ul li a {
+  margin-left: 7px;
+}
+/* .nav-left {
+  margin-left: 20px;
+} */
+.margin01 {
+  margin-left: 0px;
+}
+nav ul li {
+  margin-right: 42px;
+}
+.sns li{
+  font-size: 11px;
+}
+.sns ul a:hover{
+  color:#CC0030;
+  transform: scale(1.2);
+}
+h1{
+  text-align: left;
+  margin: 20px 0 6px;
+}
+
+.item{
+  display: flex;
+}
+.item01{
+  width: 550px;
+}
+.item02{
+  width: 430px;
+  display: flex;
+  justify-content: center;
+  margin-left: 5px;
+}
+.item02 img{
+  margin: 0 3px 3px;
+}
+.thumb{
+  text-align: center;
+}
+.link{
+  width: 550px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.link div{
+  margin: 15px;
+}
+.btn03 {
+  padding: 3px 47px;
+}
+
+.main li {
+  width: 550px;
+  overflow: hidden;
+}
+.main li.item2,
+.main li.item3,
+.main li.item4 {
+  display: none;
+}
+.main li:hover img {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  -ms-filter: "alpha(opacity=80)";
+}
+.thumb,
+.thumb li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.thumb li {
+  display: inline-block;
+  width: 150px;
+  overflow: hidden;
+  cursor: pointer;
+  vertical-align: top;
+  margin-bottom: 4px;
+}
+.thumb li img {
+  width: 100%;
+  height: auto;
+}
+.thumb li:hover img {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  -ms-filter: "alpha(opacity=80)";
+}
+
+
+.line{
+  margin-top: 30px;
+  border-top: 1px solid #996666;
+}
+li{
+  list-style: none;
+}
+.online-main02{
+  display: flex;
+  margin: 35px 0 10px;
+}
+table {
+  width: 400px;
+  font-size: 14px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 40px;
+}
+tr {
+    border-bottom: solid 1px #e8e7e7;
+    line-height: 1.4em;
+}
+th {
+  text-align: left;
+  text-transform: lowercase;
+  padding: 10px 0;
+  font-weight: normal;
+  color: #666;
+  width: 60px;
+}
+td {
+  padding: 10px;
+  line-height: 1.3em;
+}
+.details-list{
+  margin: 0 35px;
+}
+.description{
+  width: 580px;
+  padding: 20px 24px
+}
+p{
+  line-height: 36px;
+  font-size: 14px;
+}
+.ilust{
+  margin-left: 45px;
+  margin-right: -40px;
+}
+.online-main03{
+  width: 980px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 53px;
+}
+
+
+.coment{/*親div*/
+  position: relative;/*相対配置*/
+  }
+
+.coment p {
+  position: absolute;/*絶対配置*/
+  color: #000000;/*文字は白に*/
+  top: 50px;
+  left: 90px;
+  }
+
+.coment img {
+  width: 100%;
+  }
+.coment p{
+    line-height: 23px;
+    font-size: 14px;
+  }
+.price{
+  display: flex;
+  justify-content: flex-end;
+}
+.price02 p{
+  font-size: 26px;
+  margin-right: 50px;
+}
+.cart{
+  float: right;
+  margin: 30px;
+  margin-bottom: 70px;
+}
+.cart .btn{
+  padding: 4px 65px;
+}
+
+
+
+#menu{
+  list-style-type: none;
+}
+#menu li{
+  position: relative;
+  float: left;
+  text-align: center;
+}
+#menu li a{
+  display: block;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+#menu li ul{
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+#menu li ul div{
+  background-color: #f7f7f7a9;
+}
+#menu li:last-child ul{
+  left: -100%;
+  width: 100%;
+}
+#menu li ul li{
+  overflow: hidden;
+  height: 0;
+  color: #000;
+  -moz-transition: .2s;
+  -webkit-transition: .2s;
+  -o-transition: .2s;
+  -ms-transition: .2s;
+  transition: .2s;
+}
+#menu li ul li a{
+  margin-top: 12px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: normal;
+}
+#menu li:hover > a{
+  color:#CC0030;
+}
+#menu li:hover ul li{
+  overflow: visible;
+  height: 38px;
+}
+
+#menu li:hover ul li:first-child{
+  border-top: 0;
+}
+#menu li:hover ul li:last-child{
+  border-bottom: 0;
+}
