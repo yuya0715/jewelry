@@ -4,17 +4,7 @@
  include("php/main/header.php");
 
 
-
-$aboutText = filter_input(INPUT_POST, 'aboutText');
-$id = filter_input(INPUT_POST, 'id');
-
-if (!empty($aboutText) ) {
-  $sql = "UPDATE about_table SET content = :content WHERE id = :id";
-$stmt = $dbh->prepare($sql);
-$params = array(':content' => $aboutText, ':id' => $id );
-$stmt->execute($params);
-echo "<script>alert('更新が完了しました');</script>";
-}
+$images = glob('./img/*');
 
 ?>
 
@@ -42,8 +32,8 @@ echo "<script>alert('更新が完了しました');</script>";
           </div>
         </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -94,20 +84,19 @@ echo "<script>alert('更新が完了しました');</script>";
 
       <!-- Main content -->
       <div class="content">
-            <?php 
-            $sth =  $dbh->prepare("SELECT * FROM about_table");
-            $sth->execute(); 
-             while($row = $sth->fetch(PDO::FETCH_ASSOC)) : ?>
-             <form action="" method="post">
-              <textarea class="aboutText" name="aboutText">
-                <?php echo h($row['content']); ?>
-              </textarea>
-              <input type="hidden" name="id" value="<?php echo h($row['id']); ?>" >
-            <?php  endwhile; ?>
-              <div>
-                <button type="submit" id="insert">修正</button>
-              </div>
-            </form>
+        <div class="imgMain">
+          <?php for($i=0 ;$i<count($images);$i++): ?>
+          <div class="images">
+            <img class="image" src="<?php echo $images[$i];?>">
+            <p><?php  echo basename( $images[$i]);?></p>
+          </div>
+          <?php endfor ?>
+        </div>
+
+        <div>
+          <a href="drop.php">戻る</a>
+        </div>
+
       </div>
       <!-- /.content -->
     </div>

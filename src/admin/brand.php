@@ -42,8 +42,8 @@ echo "<script>alert('更新が完了しました');</script>";
           </div>
         </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -108,6 +108,8 @@ echo "<script>alert('更新が完了しました');</script>";
                 <button type="submit" id="insert">修正</button>
               </div>
             </form>
+
+
       </div>
       <!-- /.content -->
     </div>
