@@ -1,39 +1,13 @@
 <?php 
- include("php/main/escape.php");
- include("php/main/db.php");
+ include("../main/escape.php");
+ include("../main/db.php");
+ include("../main/header.php");
 
-
-
-$aboutText = filter_input(INPUT_POST, 'aboutText');
-$id = filter_input(INPUT_POST, 'id');
-
-if (!empty($aboutText) ) {
-  $sql = "UPDATE about_table SET content = :content WHERE id = :id";
-$stmt = $dbh->prepare($sql);
-$params = array(':content' => $aboutText, ':id' => $id );
-$stmt->execute($params);
-echo "<script>alert('更新が完了しました');</script>";
-}
-
+ $id = $_GET["id"];
+ $sth =  $dbh->prepare("SELECT * FROM news_table");
+ $sth->execute(); 
+ $rows = $sth->fetchAll();
 ?>
-<html lang="ja">
-<head>
-         <meta charset="utf-8">
-         <title>ログインフォーム</title>
-
-         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-         <link rel="stylesheet" href="css/bootstrap.css">
-     
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Theme style -->
-  <link rel="stylesheet" href="css/adminlte.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- /.navbar -->
@@ -57,37 +31,43 @@ echo "<script>alert('更新が完了しました');</script>";
           </div>
         </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+              <a href="../../index.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>TOP</p>
+              </a>
+            </li>
             <li class="nav-item">
-              <a href="php/about/about.php" class="nav-link active">
+              <a href="index.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>About</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/news/news.php" class="nav-link active">
+              <a href="news.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>NEWS</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/brand/brand.php" class="nav-link">
+              <a href="brand.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Brand</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/dropimg/drop.php" class="nav-link active">
+              <a href="drop.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像挿入</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/dropimg/img.php" class="nav-link active">
+              <a href="img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像一覧</p>
               </a>
@@ -114,9 +94,32 @@ echo "<script>alert('更新が完了しました');</script>";
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <div class="content">
-         
-      </div>
+    <div class="container">
+    <?php foreach ($rows as $row) :
+      if ($id === $row['id']):?> 
+        <p>投稿日時</p>
+        <input id="newNewsDate"  name="newNewsDate" value="<?php echo h($row['day']); ?>">
+        <p>タイトル</p>
+          <input id="newNewsTitle"  name="newNewsTitle" value="<?php echo h($row['title']); ?>">
+        <p>挿入画像</p>
+          <input  id="newNewsImg"  name="newNewsImg" value="<?php echo h($row['img']); ?>">
+        <p>内容</p>
+          <textarea id="newNewsText" name="newNewsText"><?php echo h($row['content']); ?>"</textarea>
+          <?php 
+             endif; 
+          endforeach; ?>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button id="newbtn">投稿する</button>
+        <button id="newbtn">一時保存</button>
+        <button id="rebtn" onclick="location.href='news.php'">
+        投稿しないで一覧に戻る
+      </button>
+      <button id="deletbtn" name="deletbtn">記事を削除する</button>
+    </div>
+    </div>
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -146,11 +149,6 @@ echo "<script>alert('更新が完了しました');</script>";
   <!-- REQUIRED SCRIPTS -->
 
 
-
-        <!-- AdminLTE App -->
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="js/bootstrap.bundle.js"></script>
-        <script src="js/main.js"></script>
-      </body>
-</html>
+  <?php
+   include("../main/footer.php");
+?>

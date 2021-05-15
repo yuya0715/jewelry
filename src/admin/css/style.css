@@ -1,4 +1,9 @@
 
+#newNewsText{
+  width: 1000px;
+  height: 300px;
+}
+
 .aboutText{
   width: 1000px;
   height: 500px;
@@ -10,11 +15,21 @@
 }
 .imgMain{
   display: flex;
+  flex-wrap:wrap;
 }
 .imagaes{
   position: relative;
+
 }
 
 .image{
-  width: 100px;
+  width: 150px;
+  margin-left:20px;
+}
+
+.imgBtn{
+  margin-left:20px;
+  margin-top:10px;
+  display:block;
+
 }

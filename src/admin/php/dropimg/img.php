@@ -1,37 +1,25 @@
 <?php 
- include("php/main/escape.php");
- include("php/main/db.php");
+ include("../main/escape.php");
+ include("../main/db.php");
+ include("../main/header.php");
 
 
+$images = glob('../../img/*');
 
-$aboutText = filter_input(INPUT_POST, 'aboutText');
-$id = filter_input(INPUT_POST, 'id');
 
-if (!empty($aboutText) ) {
-  $sql = "UPDATE about_table SET content = :content WHERE id = :id";
-$stmt = $dbh->prepare($sql);
-$params = array(':content' => $aboutText, ':id' => $id );
-$stmt->execute($params);
-echo "<script>alert('更新が完了しました');</script>";
+$dir="../../img/";
+//チェックされたファイル名を取得
+$deletefile=$_POST["deleteImg"];
+//ファイルが実際に存在していた場合にunlink関数で画像ファイルを削除する
+
+if(!empty($deletefile)){
+  if(file_exists($dir.$deletefile)){
+      unlink($dir.$deletefile);
+      echo "<script>alert('削除が完了しました');</script>";
+      header('Location:img.php');
+  }
 }
-
 ?>
-<html lang="ja">
-<head>
-         <meta charset="utf-8">
-         <title>ログインフォーム</title>
-
-         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-         <link rel="stylesheet" href="css/bootstrap.css">
-     
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Theme style -->
-  <link rel="stylesheet" href="css/adminlte.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
 
 
 <body class="hold-transition sidebar-mini">
@@ -57,37 +45,43 @@ echo "<script>alert('更新が完了しました');</script>";
           </div>
         </div>
 
-      <!-- Sidebar Menu -->
+        <!-- Sidebar Menu -->
       <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+              <a href="../../index.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>TOP</p>
+              </a>
+            </li>
             <li class="nav-item">
-              <a href="php/about/about.php" class="nav-link active">
+              <a href="index.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>About</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/news/news.php" class="nav-link active">
+              <a href="news.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>NEWS</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/brand/brand.php" class="nav-link">
+              <a href="brand.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Brand</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/dropimg/drop.php" class="nav-link active">
+              <a href="drop.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像挿入</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/dropimg/img.php" class="nav-link active">
+              <a href="img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像一覧</p>
               </a>
@@ -114,8 +108,19 @@ echo "<script>alert('更新が完了しました');</script>";
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <div class="content">
-         
+            <div class="imgMain">
+              <?php for($i=0 ;$i<count($images);$i++): ?>
+              <div class="images">
+                <img class="image" src="<?php echo $images[$i];?>">
+                <button class="imgBtn" type="button" data-toggle="modal" data-target="#exampleModal"  onclick="deleteIbent(`<?php  echo basename( $images[$i]);?>`)">
+                <input type="hidden" id="<?php  echo basename( $images[$i]);?>" value="<?php  echo basename( $images[$i]);?>">
+                <?php  echo basename( $images[$i]);?>
+                </button>
+              </div>
+              <?php endfor ?>
+            </div>
+        </div>
+        
       </div>
       <!-- /.content -->
     </div>
@@ -141,16 +146,33 @@ echo "<script>alert('更新が完了しました');</script>";
       <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
   </div>
-  <!-- ./wrapper -->
 
-  <!-- REQUIRED SCRIPTS -->
+  <?php
+   include("../main/footer.php");
+?>
 
 
-
-        <!-- AdminLTE App -->
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="js/bootstrap.bundle.js"></script>
-        <script src="js/main.js"></script>
-      </body>
-</html>
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">削除</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteModal"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">いいえ</button>
+        <form action="" method="post">
+           <button type="submit" class="btn btn-primary">はい
+              <input input type="hidden" id="deleteImg" name="deleteImg">     
+           </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
