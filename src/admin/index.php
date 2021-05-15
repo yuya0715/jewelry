@@ -1,8 +1,6 @@
-<?php 
+<?php
  include("php/main/escape.php");
  include("php/main/db.php");
-
-
 
 $aboutText = filter_input(INPUT_POST, 'aboutText');
 $id = filter_input(INPUT_POST, 'id');
@@ -23,7 +21,7 @@ echo "<script>alert('更新が完了しました');</script>";
 
          <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
          <link rel="stylesheet" href="css/bootstrap.css">
-     
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -115,7 +113,7 @@ echo "<script>alert('更新が完了しました');</script>";
 
       <!-- Main content -->
       <div class="content">
-         
+
       </div>
       <!-- /.content -->
     </div>
@@ -148,7 +146,7 @@ echo "<script>alert('更新が完了しました');</script>";
 
 
         <!-- AdminLTE App -->
-        
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="js/bootstrap.bundle.js"></script>
         <script src="js/main.js"></script>
