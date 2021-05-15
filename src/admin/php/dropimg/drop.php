@@ -1,20 +1,33 @@
 <?php 
- include("php/main/escape.php");
- include("php/main/db.php");
- include("php/main/header.php");
+ include("../main/escape.php");
+ include("../main/db.php");
+ include("../main/header.php");
 
 
 
-if (!empty($_FILES)) {
-    $tempfile = $_FILES['file']['tmp_name'];
-    $filename = './img/'.$_FILES['file']['name'];
-
-    if (is_uploaded_file($tempfile)) {
-        if (move_uploaded_file($tempfile, $filename)) {
-            echo $filename . "をアップロードしました。";
+ if (!empty($_FILES)) {
+    $files = [];
+    $MAXS = count($_FILES["up"]["tmp_name"] ?? []);
+    for ($i=0,$j=0; $i < $MAXS; $i++) {
+        $size     = $_FILES["up"]["size"][$i]     ?? "";
+        $tmp_file = $_FILES["up"]["tmp_name"][$i] ?? "";
+        $org_file = $_FILES["up"]["name"][$i]     ?? "";
+        if ($tmp_file != "" && $org_file != "" && 0 < $size &&       $size < 1048576 &&
+     is_uploaded_file($tmp_file)) {
+            $split = explode('.', $org_file);
+            $ext = end($split);
+            if ($ext != "" && $ext != $org_file) {
+                $up_file = "../../img/" .$_FILES['up']['name'][$i] ;
+                if (move_uploaded_file($tmp_file, $up_file)) {
+                    $files[$j++] = array('size' => $size, 'up_file'  => $up_file,
+                    'tmp_file' => $tmp_file, 'org_file' => $org_file);
+                }
+            }
         }
     }
+    echo "<script>alert('アップロードしました');</script>";
 }
+
 
 ?>
 
@@ -43,37 +56,48 @@ if (!empty($_FILES)) {
                 </div>
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
+      <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="index.php" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>About</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="brand.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Brand</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="drop.php" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>画像挿入</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="img.php" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>画像一覧</p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+               <li class="nav-item">
+              <a href="../../index.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>TOP</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="index.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>About</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="news.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>NEWS</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="brand.php" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Brand</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="drop.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>画像挿入</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="img.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>画像一覧</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -95,17 +119,17 @@ if (!empty($_FILES)) {
 
             <!-- Main content -->
             <div class="content">
-
                 <h1>画像アップロード</h1>
                 <form action="drop.php" method="post" enctype="multipart/form-data">
                     <div id="drop-zone" style="border: 1px solid; padding: 30px;">
                         <p>ファイルをドラッグ＆ドロップもしくは</p>
-                        <input type="file" name="file" id="file-input">
+                        <input type="file" name="up[]" id="file-input" multiple>
                     </div>
                     <h2>アップロードした画像</h2>
-                    <div id="preview">
-                        <input type="submit" style="margin-top: 10px">
+                    <div id="preview" >
+ 
                     </div>
+                    <input type="submit"  style="margin-top: 10px">
                 </form>
                 <div>
                     <a href="img.php">アップロードした画像一覧へ</a>
@@ -140,7 +164,7 @@ if (!empty($_FILES)) {
 
     <!-- REQUIRED SCRIPTS -->
 
-    <script src="../js/drop.js"></script>
+    <script src="../../js/drop.js"></script>
     <?php
-   include("php/main/footer.php");
+   include("../main/footer.php");
 ?>

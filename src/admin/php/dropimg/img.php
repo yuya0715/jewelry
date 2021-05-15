@@ -1,11 +1,24 @@
 <?php 
- include("php/main/escape.php");
- include("php/main/db.php");
- include("php/main/header.php");
+ include("../main/escape.php");
+ include("../main/db.php");
+ include("../main/header.php");
 
 
-$images = glob('./img/*');
+$images = glob('../../img/*');
 
+
+$dir="../../img/";
+//チェックされたファイル名を取得
+$deletefile=$_POST["deleteImg"];
+//ファイルが実際に存在していた場合にunlink関数で画像ファイルを削除する
+
+if(!empty($deletefile)){
+  if(file_exists($dir.$deletefile)){
+      unlink($dir.$deletefile);
+      echo "<script>alert('削除が完了しました');</script>";
+      header('Location:img.php');
+  }
+}
 ?>
 
 
@@ -33,14 +46,26 @@ $images = glob('./img/*');
         </div>
 
         <!-- Sidebar Menu -->
-        <nav class="mt-2">
+      <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+              <a href="../../index.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>TOP</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a href="index.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>About</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="news.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>NEWS</p>
               </a>
             </li>
             <li class="nav-item">
@@ -83,20 +108,19 @@ $images = glob('./img/*');
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <div class="content">
-        <div class="imgMain">
-          <?php for($i=0 ;$i<count($images);$i++): ?>
-          <div class="images">
-            <img class="image" src="<?php echo $images[$i];?>">
-            <p><?php  echo basename( $images[$i]);?></p>
-          </div>
-          <?php endfor ?>
+            <div class="imgMain">
+              <?php for($i=0 ;$i<count($images);$i++): ?>
+              <div class="images">
+                <img class="image" src="<?php echo $images[$i];?>">
+                <button class="imgBtn" type="button" data-toggle="modal" data-target="#exampleModal"  onclick="deleteIbent(`<?php  echo basename( $images[$i]);?>`)">
+                <input type="hidden" id="<?php  echo basename( $images[$i]);?>" value="<?php  echo basename( $images[$i]);?>">
+                <?php  echo basename( $images[$i]);?>
+                </button>
+              </div>
+              <?php endfor ?>
+            </div>
         </div>
-
-        <div>
-          <a href="drop.php">戻る</a>
-        </div>
-
+        
       </div>
       <!-- /.content -->
     </div>
@@ -122,11 +146,33 @@ $images = glob('./img/*');
       <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
   </div>
-  <!-- ./wrapper -->
-
-  <!-- REQUIRED SCRIPTS -->
-
 
   <?php
-   include("php/main/footer.php");
+   include("../main/footer.php");
 ?>
+
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">削除</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteModal"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">いいえ</button>
+        <form action="" method="post">
+           <button type="submit" class="btn btn-primary">はい
+              <input input type="hidden" id="deleteImg" name="deleteImg">     
+           </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

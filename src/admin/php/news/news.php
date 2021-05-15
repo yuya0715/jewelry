@@ -1,37 +1,15 @@
 <?php 
- include("php/main/escape.php");
- include("php/main/db.php");
+ include("../main/escape.php");
+ include("../main/db.php");
+ include("../main/header.php");
 
+ $id = filter_input(INPUT_POST, 'id');
 
-
-$aboutText = filter_input(INPUT_POST, 'aboutText');
-$id = filter_input(INPUT_POST, 'id');
-
-if (!empty($aboutText) ) {
-  $sql = "UPDATE about_table SET content = :content WHERE id = :id";
-$stmt = $dbh->prepare($sql);
-$params = array(':content' => $aboutText, ':id' => $id );
-$stmt->execute($params);
-echo "<script>alert('更新が完了しました');</script>";
-}
+ if(!empty($id)){
+  header('Location:edit-news.php?id='.$id);
+ }
 
 ?>
-<html lang="ja">
-<head>
-         <meta charset="utf-8">
-         <title>ログインフォーム</title>
-
-         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-         <link rel="stylesheet" href="css/bootstrap.css">
-     
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Theme style -->
-  <link rel="stylesheet" href="css/adminlte.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
 
 
 <body class="hold-transition sidebar-mini">
@@ -62,32 +40,38 @@ echo "<script>alert('更新が完了しました');</script>";
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+              <a href="../../index.php" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>TOP</p>
+              </a>
+            </li>
             <li class="nav-item">
-              <a href="php/about/about.php" class="nav-link active">
+              <a href="index.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>About</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/news/news.php" class="nav-link active">
+              <a href="news.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>NEWS</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/brand/brand.php" class="nav-link">
+              <a href="brand.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Brand</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/dropimg/drop.php" class="nav-link active">
+              <a href="drop.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像挿入</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="php/dropimg/img.php" class="nav-link active">
+              <a href="img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像一覧</p>
               </a>
@@ -114,9 +98,47 @@ echo "<script>alert('更新が完了しました');</script>";
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <div class="content">
-         
+
+      <div class="container">
+        <div class="row">
+        <form action="new-news.php" method="post">
+            <button type="submit" >
+              新規記事作成
+            </button>
+          </form>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>No</h>
+                <th>日付</th>
+                <th>タイトル</th>
+                <th>状態</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+             <?php
+             $sth =  $dbh->prepare("SELECT * FROM news_table");
+             $sth->execute(); 
+             while($row = $sth->fetch(PDO::FETCH_ASSOC)) : ?>
+              <tr>
+                <td><?php echo h($row['id']); ?></td>
+                <td><?php echo h($row['day']); ?></td>
+                <td><?php echo h($row['title']); ?></td>
+                <td><?php echo h($row['status']); ?></td>
+                <form action="" method="post">
+                <td><button type="submit" class="btn btn-primary" >
+                編集する<input type="hidden" name="id" value="<?php echo h($row['id']); ?>"></button></td>
+                </form>
+              </tr>
+              <?php 
+              endwhile; ?>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -146,11 +168,6 @@ echo "<script>alert('更新が完了しました');</script>";
   <!-- REQUIRED SCRIPTS -->
 
 
-
-        <!-- AdminLTE App -->
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="js/bootstrap.bundle.js"></script>
-        <script src="js/main.js"></script>
-      </body>
-</html>
+  <?php
+   include("../main/footer.php");
+?>
