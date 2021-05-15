@@ -66,36 +66,7 @@
                 <p>TOP</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="index.php" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>About</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="news.php" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>NEWS</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="brand.php" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Brand</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="drop.php" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>画像挿入</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="img.php" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>画像一覧</p>
-              </a>
-            </li>
+            
           </ul>
         </nav>
                 <!-- /.sidebar-menu -->
