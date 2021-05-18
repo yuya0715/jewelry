@@ -79,7 +79,6 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>No</h>
                 <th>日付</th>
                 <th>タイトル</th>
                 <th>状態</th>
@@ -92,13 +91,12 @@
              $sth->execute(); 
              while($row = $sth->fetch(PDO::FETCH_ASSOC)) : ?>
               <tr>
-                <td><?php echo h($row['id']); ?></td>
-                <td><?php echo h($row['day']); ?></td>
-                <td><?php echo h($row['title']); ?></td>
-                <td><?php echo h($row['status']); ?></td>
+                <td><?php echo h($row['news_day']); ?></td>
+                <td><?php echo h($row['news_title']); ?></td>
+                <td><?php echo h($row['news_status']); ?></td>
                 <form action="" method="post">
                 <td><button type="submit" class="btn btn-primary" >
-                編集する<input type="hidden" name="id" value="<?php echo h($row['id']); ?>"></button></td>
+                編集する<input type="hidden" name="id" value="<?php echo h($row['news_id']); ?>"></button></td>
                 </form>
               </tr>
               <?php 
