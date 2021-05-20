@@ -35,12 +35,12 @@
           </div>
         </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item">
+            <li class="nav-item">
               <a href="../../index.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>TOP</p>
@@ -71,8 +71,8 @@
 
       <div class="container">
         <div class="row">
-        <form action="new-news.php" method="post">
-            <button type="submit" >
+          <form action="new-news.php" method="post">
+            <button type="submit">
               新規記事作成
             </button>
           </form>
@@ -86,7 +86,7 @@
               </tr>
             </thead>
             <tbody>
-             <?php
+              <?php
              $sth =  $dbh->prepare("SELECT * FROM news_table");
              $sth->execute(); 
              while($row = $sth->fetch(PDO::FETCH_ASSOC)) : ?>
@@ -95,8 +95,8 @@
                 <td><?php echo h($row['news_title']); ?></td>
                 <td><?php echo h($row['news_status']); ?></td>
                 <form action="" method="post">
-                <td><button type="submit" class="btn btn-primary" >
-                編集する<input type="hidden" name="id" value="<?php echo h($row['news_id']); ?>"></button></td>
+                  <td><button type="submit" class="btn btn-primary">
+                      編集する<input type="hidden" name="id" value="<?php echo h($row['news_id']); ?>"></button></td>
                 </form>
               </tr>
               <?php 

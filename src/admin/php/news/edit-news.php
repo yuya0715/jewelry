@@ -12,36 +12,25 @@
  $statusSave = filter_input(INPUT_POST, 'save');
  $timestamp = date("YmdHi");
 
-
-var_dump($id);
-var_dump($newNewsDate);
-var_dump($newNewsTitle);
-var_dump($newNewsText);
-var_dump($statusPost);
-var_dump($statusSave);
-var_dump($timestamp);
-
-
-
 //  UPDATE 
 //投稿ボタン
  if (!empty($statusPost)) {
-  $sql = "UPDATE news_table SET news_id = :news_id,news_day = :news_day,news_title = :news_title,news_text = :news_text,news_image = :news_image,news_status = :news_status,news_timestamp=:news_timestamp  WHERE  news_id = :news_id";
-$stmt = $dbh->prepare($sql);
-$params = array(':news_id' => $id,':news_day' => $newNewsDate,':news_title' => $newNewsTitle,':news_text' =>$newNewsText,':news_image' =>$newNewsImg,':news_status' =>$statusPost,':news_timestamp' =>$timestamp);
-$stmt->execute($params);
-echo "<script>alert('投稿しました');</script>";
-header('Location:index.php');
+    $sql = "UPDATE news_table SET news_id = :news_id,news_day = :news_day,news_title = :news_title,news_text = :news_text,news_image = :news_image,news_status = :news_status,news_timestamp=:news_timestamp  WHERE  news_id = :news_id";
+    $stmt = $dbh->prepare($sql);
+    $params = array(':news_id' => $id,':news_day' => $newNewsDate,':news_title' => $newNewsTitle,':news_text' =>$newNewsText,':news_image' =>$newNewsImg,':news_status' =>$statusPost,':news_timestamp' =>$timestamp);
+    $stmt->execute($params);
+    echo "<script>alert('投稿しました');</script>";
+    header('Location:index.php');
 }
 
  //一時保存ボタン
 if (!empty($statusSave)) {
-  $sql = "UPDATE news_table SET news_id = :news_id,news_day = :news_day,news_title = :news_title,news_text = :news_text,news_image = :news_image,news_status = :news_status,news_timestamp=:news_timestamp  WHERE  news_id = :news_id";
-  $stmt = $dbh->prepare($sql);
-  $params = array(':news_id' => $id,':news_day' => $newNewsDate,':news_title' => $newNewsTitle,':news_text' =>$newNewsText,':news_image' =>$newNewsImg,':news_status' =>$statusSave,':news_timestamp' =>$timestamp);
-  $stmt->execute($params);
-echo "<script>alert('一時保存しました');</script>";
-header('Location:index.php');
+    $sql = "UPDATE news_table SET news_id = :news_id,news_day = :news_day,news_title = :news_title,news_text = :news_text,news_image = :news_image,news_status = :news_status,news_timestamp=:news_timestamp  WHERE  news_id = :news_id";
+    $stmt = $dbh->prepare($sql);
+    $params = array(':news_id' => $id,':news_day' => $newNewsDate,':news_title' => $newNewsTitle,':news_text' =>$newNewsText,':news_image' =>$newNewsImg,':news_status' =>$statusSave,':news_timestamp' =>$timestamp);
+    $stmt->execute($params);
+    echo "<script>alert('一時保存しました');</script>";
+    header('Location:index.php');
 }
 
 
@@ -55,12 +44,6 @@ if (!empty($delite)) {
     echo  "<script>alert('削除が完了しました');</script>";
     header('Location:index.php');
 }
-
-
-
-
-
-
 
  $sth =  $dbh->prepare("SELECT * FROM news_table");
  $sth->execute(); 
@@ -124,31 +107,29 @@ if (!empty($delite)) {
 
       <!-- Main content -->
       <div class="container">
-        <?php foreach ($rows as $row) :
-      if ($id === $row['news_id']):?>
-        <form id="form" action="" method="post">
-          <p>投稿日時</p>
-          <input id="newNewsDate" name="newNewsDate" value="<?php echo h($row['news_day']); ?>">
-          <p>タイトル</p>
-          <input id="newNewsTitle" name="newNewsTitle" value="<?php echo h($row['news_title']); ?>">
-          <p>挿入画像</p>
-          <input id="newNewsImg" name="newNewsImg" value="<?php echo h($row['news_image']); ?>">
-          <p>内容</p>
-          <textarea id="newNewsText" name="newNewsText"><?php echo h($row['news_text']); ?></textarea>
-          <?php 
-             endif; 
-          endforeach; ?>
-          <br>
-          <br>
-          <br>
-          <br>
-          <input type="submit" name="post" value="投稿">
-          <input type="submit" name="save" value="一時保存">
-          </form>
-          <button id="rebtn" onclick="location.href='index.php'">
-            投稿しないで一覧に戻る</button>
+      <?php foreach ($rows as $row) :
+         if ($id === $row['news_id']):?>
           <form id="form" action="" method="post">
-          <input type="submit" name="delite" value="記事を削除する"></button>
+            <p>投稿日時</p>
+            <input id="newNewsDate" name="newNewsDate" value="<?php echo h($row['news_day']); ?>">
+            <p>タイトル</p>
+            <input id="newNewsTitle" name="newNewsTitle" value="<?php echo h($row['news_title']); ?>">
+            <p>挿入画像</p>
+            <input id="newNewsImg" name="newNewsImg" value="<?php echo h($row['news_image']); ?>">
+            <p>内容</p>
+            <textarea id="newNewsText" name="newNewsText"><?php echo h($row['news_text']); ?></textarea>
+      <?php endif; 
+       endforeach; ?>
+            <br>
+            <br>
+            <br>
+            <br>
+            <input type="submit" name="post" value="投稿">
+            <input type="submit" name="save" value="一時保存">
+          </form>
+            <button id="rebtn" onclick="location.href='index.php'">投稿しないで一覧に戻る</button>
+          <form id="form" action="" method="post">
+            <input type="submit" name="delite" value="記事を削除する"></button>
           </form>
       </div>
     </div>
