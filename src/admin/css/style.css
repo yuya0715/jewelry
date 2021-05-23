@@ -1,14 +1,4 @@
 
-#newNewsText{
-  width: 1000px;
-  height: 300px;
-}
-
-.aboutText{
-  width: 1000px;
-  height: 500px;
-}
-
 #insert{
   padding: 10px 20px;
   margin-top: 20px;
@@ -33,4 +23,3 @@
   display:block;
 
 }
-
