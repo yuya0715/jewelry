@@ -18,6 +18,7 @@ if (!empty($newsId) && $status === 'update') {
   } catch(PDOException $e) {
     exit($e);
   }
+  $newsId = $row5['news_id'];
   $postDate = $row5['news_day'];
   $postTitle = $row5['news_title'];
   $postImage = $row5['news_image'];
@@ -34,13 +35,6 @@ if (!empty($newsId) && $status === 'update') {
      $postImage = filter_input(INPUT_POST, 'postImage');
      $postText = filter_input(INPUT_POST, 'postText');
      $timestamp = date("YmdHi");
-     var_dump($newsId);
-     var_dump($status);
-     var_dump($postDate);
-     var_dump($postTitle);
-     var_dump($postImage);
-     var_dump($postText);
-     var_dump($timestamp);
 
      // insert
      if (empty($newsId)) {
@@ -49,9 +43,10 @@ if (!empty($newsId) && $status === 'update') {
          try {
              $stmt = $dbh->prepare("
           INSERT INTO
-            news_table(news_id,news_day,news_title,news_text,news_image,news_status,news_timestamp)
-          VALUES
-            (:news_id,:news_day,:news_title,:news_text,:news_image,:news_status,:news_timestamp)
+            news_table(
+              news_id,news_day,news_title,news_text,news_image,news_status,news_timestamp)
+            VALUES(
+              :news_id,:news_day,:news_title,:news_text,:news_image,:news_status,:news_timestamp)
         ");
 
              $stmt->bindValue(':news_id', $newsId, PDO::PARAM_STR);
@@ -84,6 +79,7 @@ if (!empty($newsId) && $status === 'update') {
             news_title = :news_title,
             news_text = :news_text,
             news_image = :news_image,
+            news_status = :news_status,
             news_timestamp = :news_timestamp
           WHERE
             news_id = :news_id
@@ -97,7 +93,7 @@ if (!empty($newsId) && $status === 'update') {
              $stmt2->bindValue(':news_status', $status, PDO::PARAM_STR);
              $stmt2->bindValue(':news_timestamp', $timestamp, PDO::PARAM_STR);
              $stmt2->execute();
-
+             
              if ($status === 'post') {
                  echo "<script>alert('更新して投稿しました');</script>";
              } elseif ($status === 'save') {
@@ -112,18 +108,18 @@ if (!empty($newsId) && $status === 'update') {
 
 
 
-//   // 削除
-//  } elseif ($status === 'delete') {
-//   try {
-//     $stmt3 = $dbh->prepare("DELETE FROM news_table WHERE news_id = :news_id");
-//     $stmt3->bindValue(':news_id', $newsId, PDO::PARAM_STR);
-//     $stmt3->execute();
-//     echo  "<script>alert('削除が完了しました');</script>";
-//     $status = '';
-//   } catch (PDOException $e) {
-//     exit($e);
-//   }
-// }
+  // 削除
+  if ($status === 'delete') {
+  try {
+    $stmt3 = $dbh->prepare("DELETE FROM news_table WHERE news_id = :news_id");
+    $stmt3->bindValue(':news_id', $newsId, PDO::PARAM_STR);
+    $stmt3->execute();
+    echo  "<script>alert('削除が完了しました');</script>";
+    $status = '';
+  } catch (PDOException $e) {
+    exit($e);
+  }
+}
 
 
 
@@ -168,7 +164,7 @@ include("../parts/sidebar.php");
             </thead>
             <tbody>
               <?php
-              $sth4 =  $dbh->prepare("SELECT * FROM news_table");
+              $sth4 =  $dbh->prepare("SELECT * FROM news_table ORDER BY news_day DESC");
               $sth4->execute();
               while ($row4 = $sth4->fetch(PDO::FETCH_ASSOC)) :
               ?>
@@ -177,9 +173,11 @@ include("../parts/sidebar.php");
                   <td><?php echo h($row4['news_title']); ?></td>
                   <td><?php echo h($row4['news_status']); ?></td>
                   <td>
+                  <form id="form" action="" method="post" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-primary" name="newsStatus" value="update">編集する
                       <input type="hidden" name="newsId" value="<?php echo h($row4['news_id']); ?>">
                     </button>
+                  </form>
                   </td>
                 </tr>
               <?php
@@ -202,7 +200,7 @@ include("../parts/sidebar.php");
           <!-- 投稿日時 -->
           <div class="form-group col-5 mb-3">
             <label for="postDate">投稿日時</label>
-            <input class="form-control" id="postDate" type="date" name="postDate" >
+            <input class="form-control" id="postDate" type="date" name="postDate"  value="<?php echo h($postDate); ?>">
           </div>
           <!-- タイトル -->
           <div class="form-group col-5 mb-3">
@@ -212,10 +210,16 @@ include("../parts/sidebar.php");
           <!-- 画像 -->
           <div class="form-group col-5 mb-3">
             <label for="postImage">挿入画像</label>
-            <div class="custom-file">
+            <input  id="newNewsImg" name="postImage" value="<?php echo h($postImage); ?>">
+          
+
+            <!-- <div class="custom-file">
               <input type="file" class="custom-file-input" id="postImage" name="postImage" accept=".png, .jpeg, .jpg" value="<?php echo h($postImage); ?>">
               <label class="custom-file-label" for="postImage">ファイルを選択</label>
-            </div>
+            </div> -->
+
+
+
           </div>
           <!-- 内容 -->
           <div class="form-group col-8 mb-3">
