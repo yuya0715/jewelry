@@ -4,6 +4,7 @@ include("../parts/db.php");
 
 
 $newsId = filter_input(INPUT_POST, 'newsId');
+session_start();
 $status = filter_input(INPUT_POST, 'newsStatus');
 
 // 編集画面に遷移
@@ -18,6 +19,8 @@ if (!empty($newsId) && $status === 'update') {
   } catch(PDOException $e) {
     exit($e);
   }
+
+
   $newsId = $row5['news_id'];
   $postDate = $row5['news_day'];
   $postTitle = $row5['news_title'];
@@ -37,7 +40,7 @@ if (!empty($newsId) && $status === 'update') {
      $timestamp = date("YmdHi");
 
      // insert
-     if (empty($newsId)) {
+     if (empty($newsId) && $_SESSION["newsStatus"] ==="new") {
          $newsId = strval(date("YmdHi")) . strval(mt_rand(10, 99));
 
          try {
@@ -69,7 +72,7 @@ if (!empty($newsId) && $status === 'update') {
          }
 
          // update
-     } else {
+     } else if(!empty($newsId) && $_SESSION["newsStatus"] ==="update") {
          try {
              $stmt2 = $dbh->prepare("
           UPDATE
@@ -109,7 +112,7 @@ if (!empty($newsId) && $status === 'update') {
 
 
   // 削除
-  if ($status === 'delete') {
+  if ($status === 'delete' && $_SESSION["newsStatus"] ==="update") {
   try {
     $stmt3 = $dbh->prepare("DELETE FROM news_table WHERE news_id = :news_id");
     $stmt3->bindValue(':news_id', $newsId, PDO::PARAM_STR);
@@ -121,11 +124,8 @@ if (!empty($newsId) && $status === 'update') {
   }
 }
 
-
-
 include("../parts/header.php");
 include("../parts/sidebar.php");
-
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -142,56 +142,10 @@ include("../parts/sidebar.php");
   </div>
   <!-- /.content-header -->
 
-  <?php
-  // display all
-  if (empty($status) || $status === 'back') :
-  ?>
-    <!-- Main content -->
-    <div class="content">
-      <div class="row">
-        <form action="" method="post">
-          <button type="submit" name="newsStatus" value="new">新規記事作成</button>
-        </form>
-        <form action="" method="post">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>日付</th>
-                <th>タイトル</th>
-                <th>状態</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-              $sth4 =  $dbh->prepare("SELECT * FROM news_table ORDER BY news_day DESC");
-              $sth4->execute();
-              while ($row4 = $sth4->fetch(PDO::FETCH_ASSOC)) :
-              ?>
-                <tr>
-                  <td><?php echo h($row4['news_day']); ?></td>
-                  <td><?php echo h($row4['news_title']); ?></td>
-                  <td><?php echo h($row4['news_status']); ?></td>
-                  <td>
-                  <form id="form" action="" method="post" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-primary" name="newsStatus" value="update">編集する
-                      <input type="hidden" name="newsId" value="<?php echo h($row4['news_id']); ?>">
-                    </button>
-                  </form>
-                  </td>
-                </tr>
-              <?php
-              endwhile;
-              ?>
-            </tbody>
-          </table>
-        </form>
-      </div>
-    </div>
     <!-- /.Main content -->
   <?php
   // new or update
-  elseif ($status === 'new' || $status === 'update') :
+  if ($status === 'new' || $status === 'update') :
   ?>
     <!-- Main content -->
     <div class="container">
@@ -242,6 +196,52 @@ include("../parts/sidebar.php");
       </form>
     </div>
     <!-- /.content -->
+    <?php
+  // display all
+  else:
+  ?>
+    <!-- Main content -->
+    <div class="content">
+      <div class="row">
+        <form action="" method="post">
+          <button type="submit" name="newsStatus" value="new">新規記事作成</button>
+        </form>
+        <form action="" method="post">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>日付</th>
+                <th>タイトル</th>
+                <th>状態</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $sth4 =  $dbh->prepare("SELECT * FROM news_table ORDER BY news_day DESC");
+              $sth4->execute();
+              while ($row4 = $sth4->fetch(PDO::FETCH_ASSOC)) :
+              ?>
+                <tr>
+                  <td><?php echo h($row4['news_day']); ?></td>
+                  <td><?php echo h($row4['news_title']); ?></td>
+                  <td><?php echo h($row4['news_status']); ?></td>
+                  <td>
+                  <form id="form" action="" method="post" enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-primary" name="newsStatus" value="update">編集する
+                      <input type="hidden" name="newsId" value="<?php echo h($row4['news_id']); ?>">
+                    </button>
+                  </form>
+                  </td>
+                </tr>
+              <?php
+              endwhile;
+              ?>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
   <?php
   endif;
   ?>
@@ -251,5 +251,6 @@ include("../parts/sidebar.php");
 
 <!-- footer area -->
 <?php
+$_SESSION["newsStatus"] = $status;
 include("../parts/footer.php");
 ?>
