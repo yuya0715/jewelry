@@ -109,49 +109,49 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/main/about.php" class="nav-link active">
+              <a href="/src/admin/php/main/about.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>About</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/main/news.php" class="nav-link active">
+              <a href="/src/admin/php/main/news.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>News</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/brand/index.php" class="nav-link">
+              <a href="/src/admin/php/brand/index.php" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Brand</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/dropimg/drop.php" class="nav-link active">
+              <a href="/src/admin/php/dropimg/drop.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像挿入</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/dropimg/img.php" class="nav-link active">
+              <a href="/src/admin/php/dropimg/img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>画像一覧</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/dropimg/img.php" class="nav-link active">
+              <a href="/src/admin/php/dropimg/img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Interview</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/dropimg/img.php" class="nav-link active">
+              <a href="/src/admin/php/dropimg/img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Online Store</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="//practice-practice-sora.work/admin/php/dropimg/img.php" class="nav-link active">
+              <a href="/src/admin/php/dropimg/img.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Contact</p>
               </a>

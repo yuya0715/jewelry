@@ -3,6 +3,9 @@
   include("../parts/escape.php");
   include("../parts/db.php");
 
+  $images = glob('../../img/*');
+  $dir = "../../img/";
+
   $aboutTitle = filter_input(INPUT_POST, 'aboutTitle');
   $aboutContent1 = filter_input(INPUT_POST, 'aboutContent1');
   $aboutImg = filter_input(INPUT_POST, 'aboutImg');
@@ -10,23 +13,23 @@
   $id = filter_input(INPUT_POST, 'id');
 
   if (!empty($aboutTitle)) {
-    $sql = "UPDATE 
+    $sql = "UPDATE
               about_table
-            SET 
+            SET
               about_title = :about_title,
               about_content1 = :about_content1,
               about_img = :about_img,
               about_content2 = :about_content2
-            WHERE 
+            WHERE
               id = :id";
     $stmt = $dbh->prepare($sql);
     $params = array(
-             ':about_title' => $aboutTitle,
-             ':about_content1' => $aboutContent1,
-             ':about_img' => $aboutImg,
-             ':about_content2' => $aboutContent2,
-             ':id' => $id
-            );
+      ':about_title' => $aboutTitle,
+      ':about_content1' => $aboutContent1,
+      ':about_img' => $aboutImg,
+      ':about_content2' => $aboutContent2,
+      ':id' => $id
+    );
     $stmt->execute($params);
     echo "<script>alert('更新が完了しました');</script>";
   }
@@ -70,13 +73,16 @@
           <textarea id="aboutContent1" class="form-control" name="aboutContent1" rows="6" cols="40"
             required><?php echo h($row['about_content1']); ?></textarea>
         </div>
+
         <!-- 画像 -->
         <div class="form-group col-5 mb-3">
           <label for="aboutImg">挿入画像</label>
           <div class="custom-file">
-           <input id="aboutImg" name="aboutImg" value="<?php echo h($row['about_img']); ?>">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">画像を選択する</button>
+            <input id="aboutImg" name="aboutImg" value="<?php echo h($row['about_img']); ?>">
           </div>
         </div>
+
         <!-- 内容2 -->
         <div class="form-group col-8 mb-3">
           <label for="aboutContent2">内容</label>
@@ -89,15 +95,46 @@
     endwhile;
       ?>
       <div>
-        <button type="submit" id="insert">修正</button>
+        <button type="submit" id="insert" class="btn btn-success">修正</button>
       </div>
     </form>
+    <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Photo View</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="imgMain">
+              <?php
+              for($i=0 ;$i<count($images);$i++):
+              ?>
+              <div class="images">
+                <img class="image" src="<?php echo $images[$i];?>">
+                <button class="imgBtn" type="button" data-toggle="modal" data-target="#exampleModal"  onclick="deleteIbent(`<?php  echo basename( $images[$i]);?>`)">
+                <input type="hidden" id="<?php  echo basename( $images[$i]);?>" value="<?php  echo basename( $images[$i]);?>">
+                <?php  echo basename( $images[$i]);?>
+                </button>
+              </div>
+              <?php
+              endfor;
+              ?>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- /.content -->
 
 </div>
 <!-- /.content-wrapper -->
-
 
 <!-- footer area -->
 <?php
