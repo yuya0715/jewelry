@@ -96,7 +96,7 @@ if (!empty($newsId) && $status === 'update') {
              $stmt2->bindValue(':news_status', $status, PDO::PARAM_STR);
              $stmt2->bindValue(':news_timestamp', $timestamp, PDO::PARAM_STR);
              $stmt2->execute();
-             
+
              if ($status === 'post') {
                  echo "<script>alert('更新して投稿しました');</script>";
              } elseif ($status === 'save') {
@@ -165,7 +165,7 @@ include("../parts/sidebar.php");
           <div class="form-group col-5 mb-3">
             <label for="postImage">挿入画像</label>
             <input  id="newNewsImg" name="postImage" value="<?php echo h($postImage); ?>">
-          
+
 
             <!-- <div class="custom-file">
               <input type="file" class="custom-file-input" id="postImage" name="postImage" accept=".png, .jpeg, .jpg" value="<?php echo h($postImage); ?>">
