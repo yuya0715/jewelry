@@ -17,3 +17,20 @@ if (document.getElementById('postImage') != undefined) {
   // ファイル選択時にhandleFileSelectを発火
   fileInput.addEventListener('change', handleFileSelect);
 }
+
+$(function() {
+  $('textarea[name="body"]').keyup(function() {
+    if($('input[name="switchFormat"]:checked').val() == 'html') {
+      $('#preview_body').html($('textarea[name="body"]').val());
+    } else {
+      $('#preview_body').text($('textarea[name="body"]').val());
+    }
+  });
+  $('input[name="sort"]').click(function() {
+    if($('input[name="switchFormat"]:checked').val() == 'html') {
+      $('#preview_body').html($('textarea[name="body"]').val());
+    } else {
+      $('#preview_body').text($('textarea[name="body"]').val());
+    }
+  });
+});
