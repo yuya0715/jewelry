@@ -1,8 +1,8 @@
 <?php
-  include("php/parts/header.php");
-  include("php/parts/sidebar.php");
-  include("php/parts/escape.php");
-  include("php/parts/db.php");
+  include("./php/parts/header.php");
+  include("./php/parts/sidebar.php");
+  include("./php/parts/escape.php");
+  include("./php/parts/db.php");
 
   $aboutText = filter_input(INPUT_POST, 'aboutText');
   $id = filter_input(INPUT_POST, 'id');
@@ -40,5 +40,5 @@
 
 <!-- footer area -->
 <?php
-include("php/parts/footer.php");
+include("./php/parts/footer.php");
 ?>

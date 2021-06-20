@@ -17,3 +17,14 @@ if (document.getElementById('postImage') != undefined) {
   // ファイル選択時にhandleFileSelectを発火
   fileInput.addEventListener('change', handleFileSelect);
 }
+
+
+// contactページ
+function detailOpen(i) {
+  let hdn1 = 'contactTitleHdn' + i;
+  let hdn2 = 'contactDetailHdn' + i;
+  let titleHdn = document.getElementById(hdn1);
+  let detailHdn = document.getElementById(hdn2);
+  document.getElementById('contactModalLabel').innerHTML = titleHdn.value;
+  document.getElementById('contactModalContent').innerHTML = detailHdn.value;
+}

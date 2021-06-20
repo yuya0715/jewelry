@@ -139,7 +139,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/src/admin/php/dropimg/img.php" class="nav-link active">
+              <a href="/src/admin/php/main/shop.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Interview</p>
               </a>
@@ -151,7 +151,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/src/admin/php/dropimg/img.php" class="nav-link active">
+              <a href="/src/admin/php/main/contact.php" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Contact</p>
               </a>

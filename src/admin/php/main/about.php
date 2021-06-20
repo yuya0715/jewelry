@@ -1,5 +1,4 @@
 <?php
-
   include("../parts/escape.php");
   include("../parts/db.php");
 
