@@ -3,12 +3,27 @@ include("./header.php");
 include("./escape.php");
 include("./db.php");
 
-$name = filter_input(INPUT_POST, 'contactName');
-$mail = filter_input(INPUT_POST, 'contactMail');
-$title = filter_input(INPUT_POST, 'contactTitle');
-$content = filter_input(INPUT_POST, 'contactContent');
 
-if(!empty($name) && !empty($mail) && !empty($title) && !empty($content)) {
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // ID生成（10桁）
+  $contactId = '';
+  for($i=0; $i<10; $i++){
+    if($i === 0) {
+      $contactId .= mt_rand(1,9);
+    } else {
+      $contactId .= mt_rand(0,9);
+    }
+  }
+  $contactName = filter_input(INPUT_POST, 'contactName');
+  $contactMail = filter_input(INPUT_POST, 'contactMail');
+  $contactDate = date("Y-m-d H:i", time());
+  $contactStatus = '未読';
+  // checkboxのため、複数選択されている場合がある（カンマ区切りでINSERT）
+  if(isset($_POST['contactTitle']) && is_array($_POST['contactTitle'])) {
+    $contactTitle = implode(',', $_POST['contactTitle']);
+  }
+  $contactDetail = filter_input(INPUT_POST, 'contactDetail');
+
   try {
     $stmt = $dbh->prepare("
     INSERT INTO contact_table(
@@ -17,21 +32,17 @@ if(!empty($name) && !empty($mail) && !empty($title) && !empty($content)) {
       :contact_id, :contact_name, :contact_mail, :contact_date, :contact_status, :contact_title, :contact_detail)
     ");
 
-    $stmt->bindValue(':news_id', $newsId, PDO::PARAM_STR);
-    $stmt->bindValue(':news_day', $postDate, PDO::PARAM_STR);
-    $stmt->bindValue(':news_title', $postTitle, PDO::PARAM_STR);
-    $stmt->bindValue(':news_text', $postText, PDO::PARAM_STR);
-    $stmt->bindValue(':news_image', $postImage, PDO::PARAM_STR);
-    $stmt->bindValue(':news_status', $status, PDO::PARAM_STR);
-    $stmt->bindValue(':news_timestamp', $timestamp, PDO::PARAM_STR);
+    $stmt->bindValue(':contact_id', $contactId);
+    $stmt->bindValue(':contact_name', $contactName);
+    $stmt->bindValue(':contact_mail', $contactMail);
+    $stmt->bindValue(':contact_date', $contactDate);
+    $stmt->bindValue(':contact_status', $contactStatus);
+    $stmt->bindValue(':contact_title', $contactTitle);
+    $stmt->bindValue(':contact_detail', $contactDetail);
     $stmt->execute();
 
-    if ($status === 'post') {
-      echo "<script>alert('投稿しました');</script>";
-    } elseif ($status === 'save') {
-      echo "<script>alert('保存しました');</script>";
-    }
-    $status = '';
+    echo "<script>alert('お問合せ頂き、誠にありがとうございます。お問い合わせ内容を確認し頂いたメールアドレス宛に回答いたしますので、今しばらくお待ち下さい。');</script>";
+
   } catch (PDOException $e) {
     exit($e);
   }
@@ -118,7 +129,7 @@ if(!empty($name) && !empty($mail) && !empty($title) && !empty($content)) {
         </p>
       </div>
       <div class="line"></div>
-      <div align="center">
+      <div class="text-center">
         <!-- <form class="form01" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSd8spkJcnGMyjJOJhJ6J44EYh_mN28aV0EFgAyCmwAFVKPLBg/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;"> -->
         <form class="form01" action="./contact.php" method="post">
           <table>
@@ -139,32 +150,31 @@ if(!empty($name) && !empty($mail) && !empty($title) && !empty($content)) {
                 <input type="checkbox" name="example" value="OnlineShopについて">OnlineShopについて
                 <input type="checkbox" name="example" value="商品について">商品について
                 <input type="checkbox" name="example" value="その他ご意見・ご要望">その他ご意見・ご要望 -->
-                <input type="checkbox" name="contactTitle" value="サイトについて">サイトについて
-                <input type="checkbox" name="contactTitle" value="OnlineShopについて">OnlineShopについて
-                <input type="checkbox" name="contactTitle" value="商品について">商品について
-                <input type="checkbox" name="contactTitle" value="その他ご意見・ご要望">その他ご意見・ご要望
+                <input type="checkbox" name="contactTitle[]" value="サイトについて">サイトについて
+                <input type="checkbox" name="contactTitle[]" value="OnlineShopについて">OnlineShopについて
+                <input type="checkbox" name="contactTitle[]" value="商品について">商品について
+                <input type="checkbox" name="contactTitle[]" value="その他ご意見・ご要望">その他ご意見・ご要望
               </td>
             </tr>
             <tr>
               <td>お問い合わせ内容 *</td>
               <!-- <td><textarea name="entry.1389805685" rows="8" cols="80" required=""></textarea></td> -->
-              <td><textarea name="contactContent" rows="8" cols="80" required=""></textarea></td>
+              <td><textarea name="contactDetail" rows="8" cols="80" required=""></textarea></td>
             </tr>
           </table>
-          <input type="submit" value="送　信" class="btn">
+          <p style="text-align:center;">
+            <input type="submit" value="送　信" class="btn">
+          </p>
         </form>
       </div>
-      <script type="text/javascript">
+      <!-- <script type="text/javascript">
         var submitted = false;
       </script>
-      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){window.location='◯◯◯◯（サンクスページのパス）';}"></iframe>
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){window.location='◯◯◯◯（サンクスページのパス）';}"></iframe> -->
 
 
 
     </section>
-
-
-
 
     <div class="page-borderbox l"></div>
     <div class="page-borderbox r"></div>
@@ -173,84 +183,6 @@ if(!empty($name) && !empty($mail) && !empty($title) && !empty($content)) {
   </main>
 </div>
 
-<footer>
-  <hr class="cp_hr04">
-  <div class="container">
-    <div class="footer-menu">
-      <a href="../index.html">
-        <p>Top</p>
-      </a>
-    </div>
-    <div class="footer-menu">
-      <a href="about.html">
-        <p>About</p>
-      </a>
-    </div>
-    <div class="footer-menu">
-      <a href="brand.html">
-        <p>Brand</p>
-      </a>
-      <!-- <ul>
-          <li><a href="">All</a></li>
-        </ul> -->
-    </div>
-    <div class="footer-menu">
-      <a href="brandhistory.html">
-        <p>BrandHistory</p>
-      </a>
-      <!-- <ul>
-          <li><a href="#aboutus">All</a></li>
-        </ul> -->
-    </div>
-
-    <div class="footer-menu">
-      <a href="interview.html">
-        <p>Interview</p>
-      </a>
-      <!-- <ul>
-          <li><a href="/works#all">All</a></li>
-        </ul> -->
-    </div>
-
-    <div class="footer-menu">
-      <a href="onlinestore.html">
-        <p>OnlineStore</p>
-      </a>
-      <ul>
-        <li><a href="/works#all">Privacy policy</a></li>
-        <li class="small"><a href="/works#all">特定商取引法に基づく表記</a></li>
-        <li class="small"><a href="/works#all">配送・返品について</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-menu">
-      <a href="contact.html">
-        <p>Contact</p>
-      </a>
-    </div>
-  </div>
-
-  <div id="followUs">
-    <ul class="btn00">
-      <li class="instagram"><a href="" target="_blank">
-          <!--instagramのURL--><i class="fab fa-instagram"></i>
-        </a></li>
-      <!--instagramのアイコン画像-->
-      <li class="facebook"><a href="" target="_blank">
-          <!--FBのURL--><i class="fab fa-facebook-square"></i>
-        </a></li>
-      <!--FBのアイコン画像-->
-      <li class="twitter"><a href=" " target="_blank"><i class="fab fa-twitter"></i></a></li>
-    </ul>
-  </div>
-
-  <div class="copyright">
-    <p><small>Copyright charMa All Rights Reserved.</small></p>
-  </div>
-  <!-- /#globalFooter -->
-</footer>
-<!-- <a href="#" class="totop">トップに<br>戻る</a> -->
-<a href="#" id="page-top">TOP</a>
 
 <?php
 include("./footer.php");

@@ -18,13 +18,88 @@ if (document.getElementById('postImage') != undefined) {
   fileInput.addEventListener('change', handleFileSelect);
 }
 
+$(function() {
+  $('textarea[name="body"]').keyup(function() {
+    if($('input[name="switchFormat"]:checked').val() == 'html') {
+      $('#preview_body').html($('textarea[name="body"]').val());
+    } else {
+      $('#preview_body').text($('textarea[name="body"]').val());
+    }
+  });
+  $('input[name="sort"]').click(function() {
+    if($('input[name="switchFormat"]:checked').val() == 'html') {
+      $('#preview_body').html($('textarea[name="body"]').val());
+    } else {
+      $('#preview_body').text($('textarea[name="body"]').val());
+    }
+  });
+});
 
-// contactページ
+
+/************************************
+* contactページ
+*************************************/
+
+// 送信確認
+function confirm_mail() {
+  let select = confirm("本当に送信してよろしいですか？");
+  return select;
+}
+
+// modalに反映
 function detailOpen(i) {
-  let hdn1 = 'contactTitleHdn' + i;
-  let hdn2 = 'contactDetailHdn' + i;
-  let titleHdn = document.getElementById(hdn1);
-  let detailHdn = document.getElementById(hdn2);
-  document.getElementById('contactModalLabel').innerHTML = titleHdn.value;
+  let hdn1 = 'contactIdHdn' + i;
+  let hdn2 = 'contactTitleHdn' + i;
+  let hdn3 = 'contactDetailHdn' + i;
+  let hdn4 = 'contactStatusHdn' + i;
+  let hdn5 = 'contactMailHdn' + i;
+  let hdn6 = 'contactNameHdn' + i;
+
+  let idHdn = document.getElementById(hdn1);
+  let titleHdn = document.getElementById(hdn2);
+  let detailHdn = document.getElementById(hdn3);
+  let statusHdn = document.getElementById(hdn4);
+  let mailHdn = document.getElementById(hdn5);
+  let nameHdn = document.getElementById(hdn6);
+
+  let titleArry;
+
+  // 名前
+  document.getElementById('contactModalLabel').innerHTML = nameHdn.value + ' 様';
+  // 宛先
+  document.getElementById('contactModalEmail').value = mailHdn.value;
+  // 問い合わせ項目
+  document.getElementById('contactModalTitle').innerHTML = '';
+  if(titleHdn.value.indexOf(',') !== -1) {
+    titleArry = titleHdn.value.split(',');
+    titleArry.forEach(function(element) {
+      document.getElementById('contactModalTitle').innerHTML += '・' + element + "<br>";
+    });
+  } else {
+    document.getElementById('contactModalTitle').innerHTML = titleHdn.value;
+  }
+  // 問い合わせ内容
   document.getElementById('contactModalContent').innerHTML = detailHdn.value;
+
+
+  // AJAXでステータスを更新（未読→未返信）
+  if(statusHdn.value === '未読') {
+    $.ajax({
+      url: '../parts/ajax.php', //送信先
+      type: 'POST', //送信方法
+      datatype: 'text', //受け取りデータの種類
+      data: {
+        'contact_id': idHdn.value
+      }
+
+    //Ajax通信が成功した時
+    }).done(function(data){
+      console.log('通信成功');
+
+    //Ajax通信が失敗した時
+    }).fail(function(data){
+      console.log('通信失敗');
+    });
+  }
+
 }
