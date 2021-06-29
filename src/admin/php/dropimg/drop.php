@@ -22,7 +22,7 @@ include("../parts/db.php");
                 }
             }
         }
-    }
+    }                
     echo "<script>alert('アップロードしました');</script>";
 }
 
