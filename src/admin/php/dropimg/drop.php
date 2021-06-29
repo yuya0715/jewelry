@@ -3,21 +3,19 @@ include("../parts/escape.php");
 include("../parts/db.php");
 
 
-
-
  if (!empty($_FILES)) {
     $files = [];
     $MAXS = count($_FILES["up"]["tmp_name"] ?? []);
     for ($i=0,$j=0; $i < $MAXS; $i++) {
-        $size     = $_FILES["up"]["size"][$i]     ?? "";
-        $tmp_file = $_FILES["up"]["tmp_name"][$i] ?? "";
-        $org_file = $_FILES["up"]["name"][$i]     ?? "";
+        $size     = $_FILES["up"]["size"][$i]     ?? ""; //元ファイルのサイズ
+        $tmp_file = $_FILES["up"]["tmp_name"][$i] ?? ""; //保存されたファイルの絶対パス
+        $org_file = $_FILES["up"]["name"][$i]     ?? ""; //元ファイルのファイル名
         if ($tmp_file != "" && $org_file != "" && 0 < $size &&       $size < 1048576 &&
      is_uploaded_file($tmp_file)) {
             $split = explode('.', $org_file);
             $ext = end($split);
             if ($ext != "" && $ext != $org_file) {
-                $up_file = "../../img/" .$_FILES['up']['name'][$i] ;
+                $up_file = "../../img/".date("YmdHi").$i.mt_rand(10,99).".$ext" ; //ファイル名、.$extは拡張子
                 if (move_uploaded_file($tmp_file, $up_file)) {
                     $files[$j++] = array('size' => $size, 'up_file'  => $up_file,
                     'tmp_file' => $tmp_file, 'org_file' => $org_file);
@@ -39,7 +37,7 @@ include("../parts/sidebar.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">管理者ID</h1>
+                            <h1 class="m-0">画像アップロード</h1>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -48,21 +46,17 @@ include("../parts/sidebar.php");
 
             <!-- Main content -->
             <div class="content">
-                <h1>画像アップロード</h1>
                 <form action="drop.php" method="post" enctype="multipart/form-data">
                     <div id="drop-zone" style="border: 1px solid; padding: 30px;">
                         <p>ファイルをドラッグ＆ドロップもしくは</p>
                         <input type="file" name="up[]" id="file-input" multiple>
                     </div>
-                    <h2>アップロードした画像</h2>
-                    <div id="preview" >
+                    <div>アップロードした画像</div>
+                    <div id="preview">
  
                     </div>
                     <input type="submit"  style="margin-top: 10px">
                 </form>
-                <div>
-                    <a href="img.php">アップロードした画像一覧へ</a>
-                </div>
             </div>
             <!-- /.content -->
         </div>
@@ -95,5 +89,6 @@ include("../parts/sidebar.php");
 
     <script src="../../js/drop.js"></script>
     <?php
-   include("../main/footer.php");
+ include("../parts/footer.php");
+
 ?>
