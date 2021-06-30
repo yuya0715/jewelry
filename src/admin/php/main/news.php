@@ -2,10 +2,21 @@
 include("../parts/escape.php");
 include("../parts/db.php");
 
+$images = glob('../../img/*');
+
 
 $newsId = filter_input(INPUT_POST, 'newsId');
 session_start();
 $status = filter_input(INPUT_POST, 'newsStatus');
+
+
+//画像挿入
+if($status === 'editing'){
+  $postImage  = filter_input(INPUT_POST,'image');
+  $postDate = filter_input(INPUT_POST, 'modalDate');
+  $postTitle = filter_input(INPUT_POST, 'modalTitle');
+  $postText = filter_input(INPUT_POST, 'modalText');
+}
 
 // 編集画面に遷移
 if (!empty($newsId) && $status === 'update') {
@@ -40,7 +51,7 @@ if (!empty($newsId) && $status === 'update') {
      $timestamp = date("YmdHi");
 
      // insert
-     if (empty($newsId) && $_SESSION["newsStatus"] ==="new") {
+     if (empty($newsId) && $_SESSION["newsStatus"] ==="new" || empty($newsId) && $_SESSION["newsStatus"] ==="editing") {
          $newsId = strval(date("YmdHi")) . strval(mt_rand(10, 99));
 
          try {
@@ -72,7 +83,7 @@ if (!empty($newsId) && $status === 'update') {
          }
 
          // update
-     } else if(!empty($newsId) && $_SESSION["newsStatus"] ==="update") {
+     } else if(!empty($newsId) && $_SESSION["newsStatus"] ==="update"|| !empty($newsId)&&$_SESSION["newsStatus"] ==="editing") {
          try {
              $stmt2 = $dbh->prepare("
           UPDATE
@@ -145,7 +156,7 @@ include("../parts/sidebar.php");
     <!-- /.Main content -->
   <?php
   // new or update
-  if ($status === 'new' || $status === 'update') :
+  if ($status === 'new' || $status === 'update' || $status === "editing") :
   ?>
     <!-- Main content -->
     <div class="container">
@@ -164,16 +175,12 @@ include("../parts/sidebar.php");
           <!-- 画像 -->
           <div class="form-group col-5 mb-3">
             <label for="postImage">挿入画像</label>
-            <input  id="newNewsImg" name="postImage" value="<?php echo h($postImage); ?>">
-
-
-            <!-- <div class="custom-file">
-              <input type="file" class="custom-file-input" id="postImage" name="postImage" accept=".png, .jpeg, .jpg" value="<?php echo h($postImage); ?>">
-              <label class="custom-file-label" for="postImage">ファイルを選択</label>
-            </div> -->
-
-
-
+             <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="modal()">画像を選択</button>
+             <input type="hidden" id="postId" name="newsId" value="<?php echo h($newsId); ?>">
+             <input type="hidden" id="postImage" name="postImage" value="<?php echo h($postImage); ?>">
+             <?php if (!empty($postImage) ) : ?>
+             <img class="image" src="../../img/<?php echo h($postImage); ?>">    
+             <?php endif; ?>
           </div>
           <!-- 内容 -->
           <div class="form-group col-8 mb-3">
@@ -249,7 +256,52 @@ include("../parts/sidebar.php");
 <!-- /.content-wrapper -->
 
 
-<!-- footer area -->
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Photo View</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="" method="post">
+          <div class="modal-body">
+            <div class="imgMain">
+              <?php
+              for($i=0 ;$i<count($images);$i++):
+              ?>
+              <div class="images">
+                <input type="radio" name="image" value="<?php  echo basename( $images[$i]);?>">
+                <img class="image" src="<?php echo $images[$i];?>">
+                <!-- <input type="hidden" id="<?php  echo basename( $images[$i]);?>" value="<?php  echo basename( $images[$i]);?>"> -->
+                </button>
+              </div>
+              <?php
+              endfor;
+              ?>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"  name="newsStatus" value="editing">Save changes
+            <input type="hidden" id="modalDate" name="modalDate">
+            <input type="hidden" id="modalTitle" name="modalTitle">
+            <input type="hidden" id="modalText" name="modalText">
+            <input type="hidden" id="modalId" name="newsId" >
+            </button> 
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- footer area -->
 <?php
 $_SESSION["newsStatus"] = $status;
 include("../parts/footer.php");

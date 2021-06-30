@@ -30,7 +30,7 @@ include("../parts/sidebar.php");
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">管理者ID</h1>
+              <h1 class="m-0">画像一覧</h1>
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -41,10 +41,9 @@ include("../parts/sidebar.php");
             <div class="imgMain">
               <?php for($i=0 ;$i<count($images);$i++): ?>
               <div class="images">
+                <button class="imgBtn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="deleteIbent(`<?php  echo basename( $images[$i]);?>`)">
                 <img class="image" src="<?php echo $images[$i];?>">
-                <button class="imgBtn" type="button" data-toggle="modal" data-target="#exampleModal"  onclick="deleteIbent(`<?php  echo basename( $images[$i]);?>`)">
                 <input type="hidden" id="<?php  echo basename( $images[$i]);?>" value="<?php  echo basename( $images[$i]);?>">
-                <?php  echo basename( $images[$i]);?>
                 </button>
               </div>
               <?php endfor ?>
@@ -77,18 +76,14 @@ include("../parts/sidebar.php");
     </footer>
   </div>
 
-  <?php
-   include("../main/footer.php");
-?>
-
 
 <!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">削除</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -96,7 +91,7 @@ include("../parts/sidebar.php");
         <p id="deleteModal"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">いいえ</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">いいえ</button>
         <form action="" method="post">
            <button type="submit" class="btn btn-primary">はい
               <input input type="hidden" id="deleteImg" name="deleteImg">     
@@ -106,3 +101,8 @@ include("../parts/sidebar.php");
     </div>
   </div>
 </div>
+
+
+<?php
+  include("../parts/footer.php");
+?>

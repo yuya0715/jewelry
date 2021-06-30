@@ -14,14 +14,13 @@
 
 .image{
   width: 150px;
-  margin-left:20px;
 }
 
 .imgBtn{
   margin-left:20px;
   margin-top:10px;
   display:block;
-
+  padding: 0;
 }
 
 .font {

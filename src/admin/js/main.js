@@ -1,8 +1,8 @@
 
-// function deleteIbent(i){
-//  document.getElementById("deleteModal").textContent = '「' + i + '」を削除してよろしいですか？';
-//  document.getElementById("deleteImg").value=i;
-// }
+function deleteIbent(i){
+ document.getElementById("deleteModal").textContent = '「' + i + '」を削除してよろしいですか？';
+ document.getElementById("deleteImg").value=i;
+}
 
 // input要素
 if (document.getElementById('postImage') != undefined) {
@@ -34,6 +34,24 @@ $(function() {
     }
   });
 });
+
+
+//モーダル起動
+function modal(){
+let postDate = document.getElementById("postDate");
+let postTitle = document.getElementById("postTitle");
+let postText = document.getElementById("postText");
+let postId = document.getElementById("postId");
+let modalDate = document.getElementById("modalDate");
+let modalTitle = document.getElementById("modalTitle");
+let modalText = document.getElementById("modalText");
+let modalId = document.getElementById("modalId");
+
+modalDate.value = postDate.value;
+modalTitle.value = postTitle.value;
+modalText.value = postText.value;
+modalId.value=postId.value;
+}
 
 
 /************************************
