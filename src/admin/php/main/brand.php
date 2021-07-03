@@ -2,9 +2,28 @@
 include("../parts/escape.php");
 include("../parts/db.php");
 
+$images = glob('../../img/*');
+
 $brandId= filter_input(INPUT_POST, 'brandId');
 session_start();
 $flag = filter_input(INPUT_POST, 'flag');
+
+
+//画像挿入
+if($flag === 'editing'){
+  $brandName = filter_input(INPUT_POST, 'modalName');
+  $brandAddress = filter_input(INPUT_POST, 'modalAddress');
+  $brandTopImage = filter_input(INPUT_POST, 'modalTopImage');
+  $brandTitle1 = filter_input(INPUT_POST, 'modalTitle1');
+  $brandContent1 = filter_input(INPUT_POST, 'modalContent1');
+  $brandImage1 = filter_input(INPUT_POST, 'modalImage1');
+  $brandTitle2 = filter_input(INPUT_POST, 'modalTitle2');
+  $brandContent2 = filter_input(INPUT_POST, 'modalContent2');
+  $brandImage2 = filter_input(INPUT_POST, 'modalImage2');
+}
+
+
+
 
 // 編集画面に遷移
 if (!empty($brandId) && $flag === 'update') {
@@ -46,7 +65,7 @@ if ($flag === 'open'|| $flag === 'close') {
       $timestamp = date("Ymd");
 
   // insert
-  if (empty($brandId)&& $_SESSION["flag"] ==="new") {
+  if (empty($brandId)&& $_SESSION["flag"] ==="new"||empty($brandId)&& $_SESSION["flag"] ==="editing") {
         $brandId = strval(mt_rand(1000000000, 9999999999));
 
         try {
@@ -109,7 +128,7 @@ if ($flag === 'open'|| $flag === 'close') {
         }
  }
   // update
-  elseif(!empty($brandId) && $_SESSION["flag"] ==="update") {
+  elseif(!empty($brandId) && $_SESSION["flag"] ==="update"||!empty($brandId) && $_SESSION["flag"] ==="editing") {
 
         try {
             $stmt2 = $dbh->prepare("
@@ -194,7 +213,7 @@ include("../parts/sidebar.php");
   <!-- /.content-header -->
   <?php
   // new or update
-  if ($flag === 'new' || $flag === 'update') :
+  if ($flag === 'new' || $flag === 'update' || $flag === 'editing') :
   ?>
   <!-- Main content -->
   <div class="container">
@@ -204,6 +223,7 @@ include("../parts/sidebar.php");
         <div class="form-group col-5 mb-3">
           <label for="brandname">企業名</label>
           <input id="brandName" class="form-control" name="brandName" value="<?php echo h($brandName); ?>">
+          <input type="hidden" id="brandId" name="brandId" value="<?php echo h($brandId); ?>">
         </div>
 
         <!--所在地 -->
@@ -215,7 +235,11 @@ include("../parts/sidebar.php");
         <!-- トップ画像 -->
         <div class="form-group col-5 mb-3">
           <label for="brandtopimage">トップ画像</label>
-          <input id="brandTopImage" name="brandTopImage" value="<?php echo h($brandTopImage); ?>">
+          <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#topimageModal" onclick="brandtopmodal()">画像を選択</button>
+          <input type="hidden" id="brandTopImage" name="brandTopImage" value="<?php echo h($brandTopImage); ?>">
+          <?php if (!empty($brandTopImage) ) : ?>
+             <img class="image" src="../../img/<?php echo h($brandTopImage); ?>">    
+             <?php endif; ?>
         </div>
 
         <!--タイトル１-->
@@ -234,7 +258,11 @@ include("../parts/sidebar.php");
         <!-- 画像1 -->
         <div class="form-group col-5 mb-3">
           <label for="brandimage1">挿入画像1</label>
-          <input id="brandImage1" name="brandImage1" value="<?php echo h($brandImage1); ?>">
+          <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#image1Modal" onclick="brand1modal()">画像を選択</button>
+          <input type="hidden" id="brandImage1" name="brandImage1" value="<?php echo h($brandImage1); ?>">
+          <?php if (!empty($brandImage1)) : ?>
+             <img class="image" src="../../img/<?php echo h($brandImage1); ?>">    
+          <?php endif; ?>
         </div>
 
         <!--タイトル２-->
@@ -253,7 +281,11 @@ include("../parts/sidebar.php");
         <!-- 画像２ -->
         <div class="form-group col-5 mb-3">
           <label for="brandimage2">挿入画像２</label>
-          <input id="brandImage2" name="brandImage2" value="<?php echo h($brandImage2); ?>">
+          <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#image2Modal" onclick="brand2modal()">画像を選択</button>
+          <input type="hidden" id="brandImage2" name="brandImage2" value="<?php echo h($brandImage2); ?>">
+          <?php if (!empty($brandImage2)) : ?>
+             <img class="image" src="../../img/<?php echo h($brandImage2); ?>">    
+          <?php endif; ?>
         </div>
 
         <!-- 編集の時のボタン -->
@@ -301,7 +333,11 @@ include("../parts/sidebar.php");
             <tr>
               <td><?php echo h($row4['brand_name']); ?></td>
               <td><?php echo h($row4['brand_address']); ?></td>
-              <td><?php echo h($row4['brand_top_image']); ?></td>
+              <td>
+                  <?php if (!empty($row4['brand_top_image'])) : ?>
+                    <img class="image" src="../../img/<?php echo h($row4['brand_top_image']);?>">
+                  <?php endif; ?>  
+              </td>
               <td><?php echo h($row4['timestamp']); ?></td>
               <td>
                   <?php if($row4['brand_flag']==="close"){
@@ -327,11 +363,144 @@ include("../parts/sidebar.php");
   <?php
   endif;
   ?>
-
-
 </div>
 <!-- /.content-wrapper -->
 
+
+<!-- topimage Modal -->
+<div class="modal fade" id="topimageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-width">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Photo View</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="" method="post">
+          <div class="modal-body">
+            <div class="imgMain">
+              <?php
+              for($i=0 ;$i<count($images);$i++):
+              ?>
+              <div class="images">
+                <input type="radio" name="modalTopImage" value="<?php  echo basename( $images[$i]);?>">
+                <img class="image" src="<?php echo $images[$i];?>">
+                </button>
+              </div>
+              <?php
+              endfor;
+              ?>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"  name="flag" value="editing">Save changes
+            <input type="hidden" id="modalId" name="brandId" >
+            <input type="hidden" id="modalName" name="modalName">
+            <input type="hidden" id="modalAddress" name="modalAddress">
+            <!-- <input type="hidden" id="modalTopImage" name="modalTopImage"> -->
+            <input type="hidden" id="modalTitle1" name="modalTitle1">
+            <input type="hidden" id="modalContent1" name="modalContent1">
+            <input type="hidden" id="modalImage1" name="modalImage1">
+            <input type="hidden" id="modalTitle2" name="modalTitle2">
+            <input type="hidden" id="modalContent2" name="modalContent2">
+            <input type="hidden" id="modalImage2" name="modalImage2">
+            </button> 
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- image1 Modal -->
+<div class="modal fade" id="image1Modal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-width">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Photo View</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="" method="post">
+          <div class="modal-body">
+            <div class="imgMain">
+              <?php
+              for($i=0 ;$i<count($images);$i++):
+              ?>
+              <div class="images">
+                <input type="radio" name="modalImage1" value="<?php  echo basename( $images[$i]);?>">
+                <img class="image" src="<?php echo $images[$i];?>">
+                </button>
+              </div>
+              <?php
+              endfor;
+              ?>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"  name="flag" value="editing">Save changes
+            <input type="hidden" id="modal1Id" name="brandId" >
+            <input type="hidden" id="modal1Name" name="modalName">
+            <input type="hidden" id="modal1Address" name="modalAddress">
+            <input type="hidden" id="modal1TopImage" name="modalTopImage">
+            <input type="hidden" id="modal1Title1" name="modalTitle1">
+            <input type="hidden" id="modal1Content1" name="modalContent1">
+            <!-- <input type="hidden" id="modalImage1" name="modalImage1"> -->
+            <input type="hidden" id="modal1Title2" name="modalTitle2">
+            <input type="hidden" id="modal1Content2" name="modalContent2">
+            <input type="hidden" id="modal1Image2" name="modalImage2">
+            </button> 
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- image2 Modal -->
+<div class="modal fade" id="image2Modal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-width">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModalLabel">Photo View</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="" method="post">
+          <div class="modal-body">
+            <div class="imgMain">
+              <?php
+              for($i=0 ;$i<count($images);$i++):
+              ?>
+              <div class="images">
+                <input type="radio" name="modalImage2" value="<?php  echo basename( $images[$i]);?>">
+                <img class="image" src="<?php echo $images[$i];?>">
+                </button>
+              </div>
+              <?php
+              endfor;
+              ?>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"  name="flag" value="editing">Save changes
+            <input type="hidden" id="modal2Id" name="brandId" >
+            <input type="hidden" id="modal2Name" name="modalName">
+            <input type="hidden" id="modal2Address" name="modalAddress">
+            <input type="hidden" id="modal2TopImage" name="modalTopImage">
+            <input type="hidden" id="modal2Title1" name="modalTitle1">
+            <input type="hidden" id="modal2Content1" name="modalContent1">
+            <input type="hidden" id="modal2Image1" name="modalImage1">
+            <input type="hidden" id="modal2Title2" name="modalTitle2">
+            <input type="hidden" id="modal2Content2" name="modalContent2">
+            <!-- <input type="hidden" id="modalImage2" name="modalImage2"> -->
+            </button> 
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!-- footer area -->
 <?php

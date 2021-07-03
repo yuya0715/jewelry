@@ -10,7 +10,7 @@ include("../parts/db.php");
         $size     = $_FILES["up"]["size"][$i]     ?? ""; //元ファイルのサイズ
         $tmp_file = $_FILES["up"]["tmp_name"][$i] ?? ""; //保存されたファイルの絶対パス
         $org_file = $_FILES["up"]["name"][$i]     ?? ""; //元ファイルのファイル名
-        if ($tmp_file != "" && $org_file != "" && 0 < $size &&       $size < 1048576 &&
+        if ($tmp_file != "" && $org_file != "" && 0 < $size &&       $size < 10048576 &&
      is_uploaded_file($tmp_file)) {
             $split = explode('.', $org_file);
             $ext = end($split);
