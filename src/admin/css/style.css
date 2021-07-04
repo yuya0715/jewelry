@@ -7,9 +7,9 @@
   display: flex;
   flex-wrap:wrap;
 }
-.imagaes{
+.images{
   position: relative;
-
+  margin: 10px;
 }
 
 .image{
@@ -25,4 +25,8 @@
 
 .font {
   font-family: 'Cormorant Garamond','Sawarabi Mincho', serif,'Century','Arial','YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','メイリオ', 'Meiryo','ＭＳ ゴシック',sans-serif;;
+}
+
+.modal-width{
+  max-width: 80%;
 }

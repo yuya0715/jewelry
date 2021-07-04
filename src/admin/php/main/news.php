@@ -261,7 +261,7 @@ include("../parts/sidebar.php");
 
     <!-- Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-width">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="imageModalLabel">Photo View</h5>
@@ -276,7 +276,6 @@ include("../parts/sidebar.php");
               <div class="images">
                 <input type="radio" name="image" value="<?php  echo basename( $images[$i]);?>">
                 <img class="image" src="<?php echo $images[$i];?>">
-                <!-- <input type="hidden" id="<?php  echo basename( $images[$i]);?>" value="<?php  echo basename( $images[$i]);?>"> -->
                 </button>
               </div>
               <?php

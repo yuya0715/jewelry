@@ -36,7 +36,7 @@ $(function() {
 });
 
 
-//モーダル起動
+//Newsモーダル起動
 function modal(){
 let postDate = document.getElementById("postDate");
 let postTitle = document.getElementById("postTitle");
@@ -52,6 +52,120 @@ modalTitle.value = postTitle.value;
 modalText.value = postText.value;
 modalId.value=postId.value;
 }
+
+//brand topimage モーダル起動
+function brandtopmodal(){
+  let brandId = document.getElementById("brandId");
+  let brandName = document.getElementById("brandName");
+  let brandAddress = document.getElementById("brandAddress");
+  // let brandTopImage = document.getElementById("brandTopImage");
+  let brandTitle1 = document.getElementById("brandTitle1");
+  let brandContent1 = document.getElementById("brandContent1");
+  let brandImage1 = document.getElementById("brandImage1");
+  let brandTitle2 = document.getElementById("brandTitle2");
+  let brandContent2 = document.getElementById("brandContent2");
+  let brandImage2 = document.getElementById("brandImage2");
+
+  let modalId = document.getElementById("modalId");
+  let modalName = document.getElementById("modalName");
+  let modalAddress = document.getElementById("modalAddress");
+  // let modalTopImage = document.getElementById("modalTopImage");
+  let modalTitle1 = document.getElementById("modalTitle1");
+  let modalContent1 = document.getElementById("modalContent1");
+  let modalImage1 = document.getElementById("modalImage1");
+  let modalTitle2 = document.getElementById("modalTitle2");
+  let modalContent2 = document.getElementById("modalContent2");
+  let modalImage2 = document.getElementById("modalImage2");
+
+  modalId.value=brandId.value;
+  modalName.value=brandName.value;
+  modalAddress.value=brandAddress.value;
+  // modalTopImage.value=brandTopImage.value;
+  modalTitle1.value=brandTitle1.value;
+  modalContent1.value=brandContent1.value;
+  modalImage1.value=brandImage1.value;
+  modalTitle2.value=brandTitle2.value;
+  modalContent2.value=brandContent2.value;
+  modalImage2.value=brandImage2.value;
+  
+  }
+  
+
+//brand image1 モーダル起動
+function brand1modal(){
+  console.log("aaa");
+  let brandId = document.getElementById("brandId");
+  let brandName = document.getElementById("brandName");
+  let brandAddress = document.getElementById("brandAddress");
+  let brandTopImage = document.getElementById("brandTopImage");
+  let brandTitle1 = document.getElementById("brandTitle1");
+  let brandContent1 = document.getElementById("brandContent1");
+  // let brandImage1 = document.getElementById("brandImage1");
+  let brandTitle2 = document.getElementById("brandTitle2");
+  let brandContent2 = document.getElementById("brandContent2");
+  let brandImage2 = document.getElementById("brandImage2");
+
+  let modalId = document.getElementById("modal1Id");
+  let modalName = document.getElementById("modal1Name");
+  let modalAddress = document.getElementById("modal1Address");
+  let modalTopImage = document.getElementById("modal1TopImage");
+  let modalTitle1 = document.getElementById("modal1Title1");
+  let modalContent1 = document.getElementById("modal1Content1");
+  // let modalImage1 = document.getElementById("modalImage1");
+  let modalTitle2 = document.getElementById("modal1Title2");
+  let modalContent2 = document.getElementById("modal1Content2");
+  let modalImage2 = document.getElementById("modal1Image2");
+
+  modalId.value=brandId.value;
+  modalName.value=brandName.value;
+  modalAddress.value=brandAddress.value;
+  modalTopImage.value=brandTopImage.value;
+  modalTitle1.value=brandTitle1.value;
+  modalContent1.value=brandContent1.value;
+  // modalImage1.value=brandImage1.value;
+  modalTitle2.value=brandTitle2.value;
+  modalContent2.value=brandContent2.value;
+  modalImage2.value=brandImage2.value;
+  console.log("bbb");
+  }
+
+  //brand image2モーダル起動
+function brand2modal(){
+  let brandId = document.getElementById("brandId");
+  let brandName = document.getElementById("brandName");
+  let brandAddress = document.getElementById("brandAddress");
+  let brandTopImage = document.getElementById("brandTopImage");
+  let brandTitle1 = document.getElementById("brandTitle1");
+  let brandContent1 = document.getElementById("brandContent1");
+  let brandImage1 = document.getElementById("brandImage1");
+  let brandTitle2 = document.getElementById("brandTitle2");
+  let brandContent2 = document.getElementById("brandContent2");
+  // let brandImage2 = document.getElementById("brandImage2");
+
+  let modalId = document.getElementById("modal2Id");
+  let modalName = document.getElementById("modal2Name");
+  let modalAddress = document.getElementById("modal2Address");
+  let modalTopImage = document.getElementById("modal2TopImage");
+  let modalTitle1 = document.getElementById("modal2Title1");
+  let modalContent1 = document.getElementById("modal2Content1");
+  let modalImage1 = document.getElementById("modal2Image1");
+  let modalTitle2 = document.getElementById("modal2Title2");
+  let modalContent2 = document.getElementById("modal2Content2");
+  // let modalImage2 = document.getElementById("modalImage2");
+
+  modalId.value=brandId.value;
+  modalName.value=brandName.value;
+  modalAddress.value=brandAddress.value;
+  modalTopImage.value=brandTopImage.value;
+  modalTitle1.value=brandTitle1.value;
+  modalContent1.value=brandContent1.value;
+  modalImage1.value=brandImage1.value;
+  modalTitle2.value=brandTitle2.value;
+  modalContent2.value=brandContent2.value;
+  // modalImage2.value=brandImage2.value;
+  
+  }
+
 
 
 /************************************
