@@ -36,3 +36,13 @@ h3{
 .box_desc:hover{
   background-color: #fdeff2;
 }
+
+.box_desc img{
+  width: 230px;
+  height: 180px;
+  }
+
+  .box_desc button{
+    border: none;
+    background-color: transparent;
+  }

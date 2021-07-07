@@ -2,8 +2,9 @@
 include("./header.php");
 include("./escape.php");
 include("./db.php");
+
 ?>
-<link href="../css/news.css" rel="stylesheet">
+<link href="../css/brand.css" rel="stylesheet">
 
 	<div class="wrapper">
   <div class="el_humburger"><!--ハンバーガーボタン-->
@@ -13,6 +14,7 @@ include("./db.php");
       <span class="el_humburger_bar bottom"></span>
     </div>
   </div>
+
   <div id="loader-bg">
     <div id="loader">
       <img src="../images/zara.gif" width="130" height="auto">
@@ -21,12 +23,11 @@ include("./db.php");
 
   <header class="navi">
     <div class="navi_inner">
-      <div class="navi_item"><a href="../index.html">Top</a></div>
-      <div class="navi_item"><a href="about.html">About</a></div>
-      <div class="navi_item"><a href="brand.html">Brand</a></div>
-      <div class="navi_item"><a href="brandhistory.html">BrandHistory</a></div>
-      <div class="navi_item"><a href="onlinestore.html">OnlineStore</a></div>
-      <div class="navi_item"><a href="contact.html">Contact</a></div>
+      <div class="navi_item"><a href="">About</a></div>
+      <div class="navi_item"><a href="">Brand</a></div>
+      <div class="navi_item"><a href="">BrandHistory</a></div>
+      <div class="navi_item"><a href="">OnlineStore</a></div>
+      <div class="navi_item"><a href="">Contact</a></div>
 
     </div>
   </header>
@@ -37,6 +38,7 @@ include("./db.php");
       <nav class="navBox">
         <div class="center">
           <ul class="nav-left">
+
             <li><a href="about.html">About</a></li>
             <li><a href="brand.html">Brand</a></li>
             <li><a href="brandhistory.html">BrandHistory</a></li>
@@ -63,38 +65,42 @@ include("./db.php");
       <div id="mask"></div>
     </header>
 
+  <!-- <div class="main_photo">
+    <div class="slideshow">
+      <img class="shadow" src="images/top03.png" alt="charMaTOP" width="980px" height="auto"> -->
+      <!-- <img class="shadow" src="images/sozai01.jpg" alt="charMa" width="980px" height="auto"> -->
+      <!-- <img src="" alt=""> -->
+    <!-- </div>
+  </div> -->
+
 	<main>
+    <section class="brand">
+      <h1>Brand</h1>
 
-    <h1>News</h1>
-
-    <?php
-      $sth4 =  $dbh->prepare("SELECT * FROM news_table ORDER BY news_day DESC");
-      $sth4->execute();
-      while ($row4 = $sth4->fetch(PDO::FETCH_ASSOC)) :
-      ?>
-        <?php if ($row4['news_status'] === "post") : ?>
-          <section class="news">
-            <div class="days">
-              <p><?php echo h($row4['news_day']); ?></p>
-            </div>
-            <div class="image">
-              <?php if (empty($row4['news_image'])) : ?>
-                <img src="../admin/img/202107050947016.png" alt="">
-              <?php else :?>
-                <img src="../admin/img/<?php echo h($row4['news_image']); ?>" alt="">
-              <?php endif; ?>  
-            </div>
-            <div class="title_dc">
-              <h4><?php echo h($row4['news_title']); ?></h4>
-              <div class="discription">
-                <p><?php echo h($row4['news_text']); ?></p>
+      <div class="list">
+        <?php
+        $sth =  $dbh->prepare("SELECT * FROM brand_table");
+        $sth->execute();
+        while ($row = $sth->fetch(PDO::FETCH_ASSOC)) :
+          if ($row['brand_flag'] === "open") : 
+        ?>   
+          <form action="history01.php" method="get">
+            <div>
+              <div class="box_desc">
+                <button type="submit">
+                  <img src="../admin/img/<?php echo h($row['brand_top_image']); ?>"> 
+                  <h3><?php echo h($row['brand_name']); ?></h3>
+                  <input type="hidden" id="brandId" name="brandId" value="<?php echo h($row['brand_id']); ?>">
+                </button>
               </div>
             </div>
-          </section>
-        <?php endif; ?>  
-      <?php
-      endwhile;
-      ?>
+          </form>
+          <?php endif; ?> 
+        <?php endwhile;?>
+      </div>  
+  </section>
+
+
     <div class="page-borderbox l"></div>
     <div class="page-borderbox r"></div>
     <div class="page-borderbox t"></div>
