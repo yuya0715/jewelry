@@ -100,7 +100,7 @@ $brandImage2 = $row['brand_block2_image'];
 
             </div>
             <div class="c02">
-              <img src="../admin/img/<?php echo h($brandTopImage); ?>" alt="" >
+              <img src="../img/<?php echo h($brandTopImage); ?>" alt="" >
             </div>
           </div>
         </div>
@@ -117,14 +117,14 @@ $brandImage2 = $row['brand_block2_image'];
       <div class="line"></div>
       <h2 class="komidasi"><i class="fas fa-signature"></i><?php echo h($brandTitle1); ?></h2>
       <section class="history01">
-      <figure><img src="../admin/img/<?php echo h($brandImage1); ?>"></figure>
+      <figure><img src="../img/<?php echo h($brandImage1); ?>"></figure>
         <p><?php echo h($brandContent1); ?></p>
 
       </section>
       <div class="line"></div>
       <h2 class="komidasi"><i class="fas fa-signature"></i><?php echo h($brandTitle2); ?></h2>
       <section class="history02">
-      <figure><img src="../admin/img/<?php echo h($brandImage2); ?>"></figure>
+      <figure><img src="../img/<?php echo h($brandImage2); ?>"></figure>
         <p><p><?php echo h($brandContent2); ?></p></p>
 
       </section>

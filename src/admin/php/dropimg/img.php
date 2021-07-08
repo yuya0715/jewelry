@@ -2,7 +2,7 @@
    include("../parts/escape.php");
    include("../parts/db.php");
 
-$dir="../../img/";
+$dir="../../../img/";
 //チェックされたファイル名を取得
 $deletefile=$_POST["deleteImg"];
 //ファイルが実際に存在していた場合にunlink関数で画像ファイルを削除する
@@ -15,7 +15,7 @@ if(!empty($deletefile)){
   }
 }
 
-$images = glob('../../img/*');
+$images = glob('../../../img/*');
 
 include("../parts/header.php");
 include("../parts/sidebar.php");

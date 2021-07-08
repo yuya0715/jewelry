@@ -2,7 +2,7 @@
 include("../parts/escape.php");
 include("../parts/db.php");
 
-$images = glob('../../img/*');
+$images = glob('../../../img/*');
 
 $brandId= filter_input(INPUT_POST, 'brandId');
 session_start();
@@ -238,7 +238,7 @@ include("../parts/sidebar.php");
           <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#topimageModal" onclick="brandtopmodal()">画像を選択</button>
           <input type="hidden" id="brandTopImage" name="brandTopImage" value="<?php echo h($brandTopImage); ?>">
           <?php if (!empty($brandTopImage) ) : ?>
-             <img class="image" src="../../img/<?php echo h($brandTopImage); ?>">    
+             <img class="image" src="../../../img/<?php echo h($brandTopImage); ?>">    
              <?php endif; ?>
         </div>
 
@@ -261,7 +261,7 @@ include("../parts/sidebar.php");
           <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#image1Modal" onclick="brand1modal()">画像を選択</button>
           <input type="hidden" id="brandImage1" name="brandImage1" value="<?php echo h($brandImage1); ?>">
           <?php if (!empty($brandImage1)) : ?>
-             <img class="image" src="../../img/<?php echo h($brandImage1); ?>">    
+             <img class="image" src="../../../img/<?php echo h($brandImage1); ?>">    
           <?php endif; ?>
         </div>
 
@@ -284,7 +284,7 @@ include("../parts/sidebar.php");
           <button type="button" class="btn btn-primary font" data-bs-toggle="modal" data-bs-target="#image2Modal" onclick="brand2modal()">画像を選択</button>
           <input type="hidden" id="brandImage2" name="brandImage2" value="<?php echo h($brandImage2); ?>">
           <?php if (!empty($brandImage2)) : ?>
-             <img class="image" src="../../img/<?php echo h($brandImage2); ?>">    
+             <img class="image" src="../../../img/<?php echo h($brandImage2); ?>">    
           <?php endif; ?>
         </div>
 
@@ -335,7 +335,7 @@ include("../parts/sidebar.php");
               <td><?php echo h($row4['brand_address']); ?></td>
               <td>
                   <?php if (!empty($row4['brand_top_image'])) : ?>
-                    <img class="image" src="../../img/<?php echo h($row4['brand_top_image']);?>">
+                    <img class="image" src="../../../img/<?php echo h($row4['brand_top_image']);?>">
                   <?php endif; ?>  
               </td>
               <td><?php echo h($row4['timestamp']); ?></td>

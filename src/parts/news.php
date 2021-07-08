@@ -79,9 +79,9 @@ include("./db.php");
             </div>
             <div class="image">
               <?php if (empty($row4['news_image'])) : ?>
-                <img src="../admin/img/202107050947016.png" alt="">
+                <img src="../img/202107050947016.png" alt="">
               <?php else :?>
-                <img src="../admin/img/<?php echo h($row4['news_image']); ?>" alt="">
+                <img src="../img/<?php echo h($row4['news_image']); ?>" alt="">
               <?php endif; ?>  
             </div>
             <div class="title_dc">

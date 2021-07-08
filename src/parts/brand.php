@@ -88,7 +88,7 @@ include("./db.php");
             <div>
               <div class="box_desc">
                 <button type="submit">
-                  <img src="../admin/img/<?php echo h($row['brand_top_image']); ?>"> 
+                  <img src="../img/<?php echo h($row['brand_top_image']); ?>"> 
                   <h3><?php echo h($row['brand_name']); ?></h3>
                   <input type="hidden" id="brandId" name="brandId" value="<?php echo h($row['brand_id']); ?>">
                 </button>

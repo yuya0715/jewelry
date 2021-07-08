@@ -15,7 +15,7 @@ include("../parts/db.php");
             $split = explode('.', $org_file);
             $ext = end($split);
             if ($ext != "" && $ext != $org_file) {
-                $up_file = "../../img/".date("YmdHi").$i.mt_rand(10,99).".$ext" ; //ファイル名、.$extは拡張子
+                $up_file = "../../../img/".date("YmdHi").$i.mt_rand(10,99).".$ext" ; //ファイル名、.$extは拡張子
                 if (move_uploaded_file($tmp_file, $up_file)) {
                     $files[$j++] = array('size' => $size, 'up_file'  => $up_file,
                     'tmp_file' => $tmp_file, 'org_file' => $org_file);

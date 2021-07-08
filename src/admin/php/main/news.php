@@ -2,7 +2,7 @@
 include("../parts/escape.php");
 include("../parts/db.php");
 
-$images = glob('../../img/*');
+$images = glob('../../../img/*');
 
 
 $newsId = filter_input(INPUT_POST, 'newsId');
@@ -179,7 +179,7 @@ include("../parts/sidebar.php");
              <input type="hidden" id="postId" name="newsId" value="<?php echo h($newsId); ?>">
              <input type="hidden" id="postImage" name="postImage" value="<?php echo h($postImage); ?>">
              <?php if (!empty($postImage) ) : ?>
-             <img class="image" src="../../img/<?php echo h($postImage); ?>">    
+             <img class="image" src="../../../img/<?php echo h($postImage); ?>">    
              <?php endif; ?>
           </div>
           <!-- 内容 -->
