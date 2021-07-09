@@ -40,9 +40,9 @@ h3{
 .box_desc img{
   width: 230px;
   height: 180px;
-  }
+}
 
-  .box_desc button{
-    border: none;
-    background-color: transparent;
-  }
+.box_desc button{
+  border: none;
+  background-color: transparent;
+}
