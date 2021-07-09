@@ -2,7 +2,7 @@
 include("../parts/escape.php");
 include("../parts/db.php");
 
-$images = glob('../../img/*');
+$images = glob('../../../img/*');
 
 
 $newsId = filter_input(INPUT_POST, 'newsId');
@@ -179,7 +179,7 @@ include("../parts/sidebar.php");
              <input type="hidden" id="postId" name="newsId" value="<?php echo h($newsId); ?>">
              <input type="hidden" id="postImage" name="postImage" value="<?php echo h($postImage); ?>">
              <?php if (!empty($postImage) ) : ?>
-             <img class="image" src="../../img/<?php echo h($postImage); ?>">    
+             <img class="image" src="../../../img/<?php echo h($postImage); ?>">    
              <?php endif; ?>
           </div>
           <!-- 内容 -->
@@ -232,7 +232,13 @@ include("../parts/sidebar.php");
                 <tr>
                   <td><?php echo h($row4['news_day']); ?></td>
                   <td><?php echo h($row4['news_title']); ?></td>
-                  <td><?php echo h($row4['news_status']); ?></td>
+                  <td>
+                      <?php if($row4['news_status']==="post"){
+                        echo "公開中";
+                      }elseif($row4['news_status']==="save"){
+                        echo "一時保存中";
+                        } ?>
+                  </td>
                   <td>
                   <form id="form" action="" method="post" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-primary" name="newsStatus" value="update">編集する
